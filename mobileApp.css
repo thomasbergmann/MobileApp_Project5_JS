@@ -1,0 +1,38 @@
+body {
+    background-image: url('bg-sky.jpg');
+    background-size: auto;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: white;
+}
+
+.small .material-icon {
+    size: 2rem;
+}
+
+
+.icon-white {
+    color: white;
+}
+
+#navBar {
+    display: flex;
+    position: sticky;
+    margin-top: 7%;
+}
+
+#headers {
+    display: flex;
+    justify-content: center;
+    margin-top: 2vh;
+}
+
+h1 {
+    font-size: 5vw;
+    text-shadow: 3px 3px 5px rgb(136, 134, 134);
+}
+
+h2 {
+    font-size: 3vw;
+    text-shadow: 3px 3px 5px rgb(136, 134, 134);
+}
