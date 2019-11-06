@@ -6,11 +6,6 @@ body {
     color: white;
 }
 
-.small .material-icon {
-    size: 2rem;
-}
-
-
 .icon-white {
     color: white;
 }
@@ -35,4 +30,33 @@ h1 {
 h2 {
     font-size: 3vw;
     text-shadow: 3px 3px 5px rgb(136, 134, 134);
+}
+
+#searchContainer {
+    padding: 20px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+#searchContainer input {
+    width: 220px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#searchContainer button {
+    width: 75px;
+}
+
+.search {
+    box-shadow: 2px 2px 5px white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+#dropdownList {
+    position: relative;
+    box-shadow: 2rem;
 }
