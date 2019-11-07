@@ -1,66 +1,98 @@
 // https: //developer.nps.gov/api/v1/parks?&api_key=imaoEsf9fjlFLYS7piqcvUZAqO3K6ZwcRSTboJM6
-// let data = data.results[0].data
 let searchMethod;
-
-fetch(`https://developer.nps.gov/api/v1/parks?&api_key=${API_key}`)
+let parkImgs = [];
+let parkList = [];
+fetch(`https://developer.nps.gov/api/v1/parks?&api_key=${API_key}&fields=images`)
     .then(response => {
         console.log(response)
         return response.json();
     })
     .then(result => {
-        console.log(result);
-        controller(result);
+        console.log(result)
+        console.log(result.data[0].images[0].url); //First pic
+
+        fillParkListDiv(result.data);
+        fillCarousel(result.data);
+
     })
     .catch(function (error) {
         console.log(error, "this is wrong");
     })
 
-function controller(data) {
-    console.log(data)
-    showData(data)
+function russel() {
+    var options = {
+        duration: 400
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        let elems = document.querySelectorAll('.carousel');
+        let instances = M.Carousel.init(elems);
+
+        // instances = document.createElement("img")
+        // console.log(instances)
+    });
 }
 
-// let data = data.result[0].data;
 
+/////------------builds carousel and fills content-------------/////
 
-var options = {
-    duration: 400
+function fillCarousel(data) {
+    let parkImgCarousel = document.getElementById("carouselID")
+    // let sliderCarousel = document.getElementById("parkImg")
+
+    console.log(data[0].images[0].url)
+    let i = 0;
+
+    data.forEach((data, index) => {
+        if (index < 5) {
+            parkImgs.push(data.images[0].url)
+            console.log(data.images[0].url)
+
+            let sliderCarousel = document.createElement("a")
+            let test = ["#one!", "#two!", "#three!", "#four!", "#five!"]
+            sliderCarousel.className = "carousel-item"
+
+            while (i < test.length) {
+                sliderCarousel.setAttribute("href", test[i])
+                i++;
+                break;
+            }
+
+            let singleImg = document.createElement("img")
+            singleImg.src = data.images[0].url
+
+            parkImgCarousel.appendChild(sliderCarousel)
+            sliderCarousel.appendChild(singleImg)
+        }
+
+    })
+    // russel()
+    document.addEventListener('DOMContentLoaded', function (event) {
+        console.log(event)
+        let elems = document.querySelectorAll('.carousel');
+        let instances = M.Carousel.init(elems);
+
+        // instances = document.createElement("img")
+        // console.log(instances)
+    });
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    let elems = document.querySelectorAll('.carousel');
-    let instances = M.Carousel.init(elems, options);
-    // instances.src = "http://developer.nps.gov/api/v1" + data.data[0].images; /--/not working--//
-    instances = document.createElement("img")
-    instances.src = data[0].images[0]
-});
 
-//--does not work----gooooooshshhhhh!!!!!!//
-function showData(data) {
-    let parkLinkDiv = document.getElementById("dropdownList");
 
-    data.forEach((item, index) => {
+//////----------------create and fill park list div----------------//////
 
-        let parkLinkName = document.createElement("h2");
-        parkLinkName.innerHTML = item.fullname;
-        let parkLink = document.createElement("button");
-        parkLink.innerHTML = "Show More Info";
+function fillParkListDiv(data) {
+    console.log(data[0].fullName);
+    let parkListDiv = document.getElementById("dropdownList");
 
-        parkLinkDiv.appendChild("parkLinkName")
-        parkLinkDiv.appendChild("parkLink")
+    data.forEach((data) => {
+        parkList.push(data.fullName);
+
+        let parkListName = document.createElement("tr");
+        parkListName.innerHTML = data.fullName;
+        let parkListButton = document.createElement("button");
+        parkListButton.innerHTML = "Show More Info";
+
+        parkListDiv.appendChild(parkListName)
+        parkListDiv.appendChild(parkListButton)
     })
 }
-
-///----also not working-----///
-
-// function fillCarousel(data) {
-//     let parkImgs = document.getElementById("carousel")
-
-//     data.forEach((item, index) => {
-
-//         let singleImg = document.createElement("a")
-//         singleImg.className = "carousel-item"
-//         singleImg.src = "http: //developer.nps.gov/api/v1/parks?" + data[0].images
-//     })
-// }
-// fillCarousel();
