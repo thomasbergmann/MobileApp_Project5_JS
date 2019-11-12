@@ -1,7 +1,8 @@
 body {
-    background-image: url("bg-sky.jpg");
-    background-size: auto;
-    background-position: center center;
+    background-image: url("darksky.jpg");
+    background-size: cover;
+
+    /* background-position: center; */
     background-repeat: no-repeat;
     color: white;
 }
@@ -10,7 +11,9 @@ body {
     color: white;
 }
 
-#navBar {
+/*generell setting for header*/
+
+.navBar {
     padding: 20px;
     position: absolute;
     top: 3vh;
@@ -31,10 +34,11 @@ body {
     left: 5vw;
 }
 
-#headers {
+#headline {
     display: flex;
     justify-content: center;
     margin-top: 5vh;
+    position: sticky;
 }
 
 h1 {
@@ -52,14 +56,37 @@ h4 {
     text-shadow: 3px 3px 5px rgb(136, 134, 134);
 }
 
-#firstHidePage {
-    margin-top: 3vh;
+
+/* ----------setting to hide and display pages-------------- */
+/* 
+.pages {
+    /* display: none; */
+/* width: 100%;
+min-height: 100%;
+position: absolute;
+padding: 1rem 2rem;
+} */
+
+/* .active {
+    display: block;
+} */
+
+/* h1 {
+    transition: all 0.4s;
 }
 
-/* .carousel {
-    width: 300px;
-    height: 313px;
+*/
+/*-------------first page style---------*/
+/* #carouselID div {
+    max-width: 320px;
+    max-height: 380px;
 } */
+
+
+.carousel-item {
+    text-align: center;
+}
+
 
 #searchContainer {
     padding: 20px;
@@ -86,6 +113,7 @@ h4 {
 
 #searchButton {
     vertical-align: 25%;
+    /* color: white; */
 }
 
 .search {
@@ -95,12 +123,29 @@ h4 {
     padding: 5px;
 }
 
+#errorDiv {
+    /* max-width: 20rem;
+    max-height: 12rem; */
+    position: relative;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    visibility: hidden;
+}
+
+.errorText {
+    flex-flow: row wrap;
+    text-align: center;
+    align-self: center;
+
+}
+
 #dropdownList {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* visibility: hidden; */
+    visibility: hidden;
 
 }
 
@@ -110,14 +155,16 @@ h4 {
     align-self: center;
 }
 
-.divBTN {
-    text-align: center;
-}
 
-.buttonList {
-    width: 47px;
-    height: 17px;
+
+/*-----------back button--------------*/
+
+#backBTN {
+    /* width: 47px;
+    height: 17px; */
     text-align: center;
     font-optical-sizing: auto;
     font-size: 1vw;
+    border-radius: 5px;
+    text-align: center;
 }
