@@ -115,12 +115,15 @@ function filterContentSecondPage(data, event) {
     console.log(event.target.id)
 
     data.forEach(function (info) {
+
+        // let div = document.getElementById('secondPage');
+
         if (event.target.id === info.id) {
+            // while (div.firstChild && div.removeChild(div.firstChild));
             buildSecondPage(info)
         }
     })
 };
-
 
 
 function buildSecondPage(data) {
@@ -129,7 +132,8 @@ function buildSecondPage(data) {
     let secondPage = document.getElementById("secondPage")
     secondPage.innerHTML = ""
 
-    let divDescription = document.getElementById("descriptionInfo")
+    let divDescription = document.createElement("div")
+    divDescription.setAttribute("id", "descriptionInfo")
     let headDescription = document.createElement("h2")
     headDescription.innerHTML = "Description:"
     let contextDescription = document.createElement("div")
@@ -137,15 +141,16 @@ function buildSecondPage(data) {
     contextDescription.innerHTML = data.description
 
 
-    let divWeather = document.getElementById("weatherInfo")
+    let divWeather = document.createElement("div")
+    divWeather.setAttribute("id", "weatherInfo")
     let headWeather = document.createElement("h2")
     headWeather.innerHTML = "Weather Information:"
     let contextWaether = document.createElement("div")
     contextWaether.setAttribute("class", "contextDiv")
     contextWaether.innerHTML = data.weatherInfo
 
-
-    let backButton = document.getElementById("backBTN")
+    let backButton = document.createElement("div")
+    backButton.setAttribute("id", "backBTN")
     let button = document.createElement("button")
     button.innerHTML = "BACK"
     button.className = "btn waves-effect waves-teal"
@@ -160,7 +165,7 @@ function buildSecondPage(data) {
     backButton.appendChild(button)
 
     document.getElementById("secondPage").style.visibility = "visible"
-    document.getElementById("firstPage").style.visibility = "none"
+    document.getElementById("firstPage").style.visibility = "hidden"
 }
 
 

@@ -82,6 +82,13 @@ padding: 1rem 2rem;
     max-height: 380px;
 } */
 
+#firstPage {
+    visibility: visible;
+}
+
+#secondPage {
+    visibility: hiddens;
+}
 
 .carousel-item {
     text-align: center;
