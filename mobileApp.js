@@ -149,6 +149,8 @@ function buildSecondPage(data) {
     buttonDirections.addEventListener("click", function (event) {
         buildThirdPage(data, event)
         secondPage.innerHTML = "";
+        // initMap()
+
 
     })
 
@@ -167,7 +169,7 @@ function buildSecondPage(data) {
     let headDescription = document.createElement("h2")
     headDescription.innerHTML = "Park Description:"
     let contextDescription = document.createElement("div")
-    contextDescription.setAttribute("class", "contextDiv")
+    contextDescription.setAttribute("id", "contextDiv")
     contextDescription.innerHTML = data.description
 
 
@@ -185,9 +187,9 @@ function buildSecondPage(data) {
     backButton1.setAttribute("id", "button1")
     button1.innerHTML = "BACK"
     button1.className = "btn waves-effect waves-teal"
-    // button1.addEventListener("click",) => {
-
-    // }
+    button1.addEventListener("click", function () {
+        window.history.back();
+    });
 
     secondPage.appendChild(divNavButtons)
     divNavButtons.appendChild(buttonDirections)
@@ -203,29 +205,32 @@ function buildSecondPage(data) {
     backButton1.appendChild(button1);
 
     document.getElementById("secondPage").style.visibility = "visible";
-    // document.getElementById("firstPage").style.visibility = "hidden"
 }
 
 
 /////////-------------------build third Page---------------------////////////////
+
 
 function buildThirdPage(data) {
 
     let thirdPage = document.getElementById("thirdPage")
     thirdPage.innerHTML = ""
 
-    let divMaps = document.createElement("div")
-    divMaps.setAttribute("id", "maps")
-    divMaps.src = data.directionsUrl
-
-    let hr = document.createElement("hr")
-    hr.style.color = "white"
-
+    let divHead = document.createElement("div")
+    divHead.setAttribute("id", "headDiv")
     let headMaps = document.createElement("h2")
     headMaps.innerHTML = "Directions:"
     let contextMaps = document.createElement("div")
     contextMaps.setAttribute("id", "contextDiv")
-    contextMaps.innerHTML = data.directions
+    contextMaps.innerHTML = data.directionsInfo
+
+    let hr = document.createElement("hr")
+    hr.style.color = "white"
+
+    let divMaps = document.createElement("div")
+    divMaps.setAttribute("id", "maps")
+    let mapsLink = document.createElement("a")
+    mapsLink.innerHTML = data.directionsUrl
 
 
     backButton2 = document.getElementById("backBTN")
@@ -233,20 +238,55 @@ function buildThirdPage(data) {
     button2.setAttribute("id", "button2")
     button2.innerHTML = "<-<<---"
     button2.className = "btn waves-effect waves-teal"
+    button2.addEventListener("click", function () {
+        window.history.back();
+    });
 
-    thirdPage.appendChild(divMaps)
-    divMaps.appendChild(headMaps)
-    divMaps.appendChild(contextMaps)
+
+    thirdPage.appendChild(divHead)
+    divHead.appendChild(headMaps)
+    divHead.appendChild(contextMaps)
     thirdPage.appendChild(hr)
+    thirdPage.appendChild(divMaps)
+    divMaps.appendChild(mapsLink)
     thirdPage.appendChild(backButton2)
     backButton2.appendChild(button2)
 
     document.getElementById("thirdPage").style.visibility = "visible";
 
 }
+// let maps = document.getElementById("maps")
+
+// function initMap(data) {
+
+//     let map = data[i].latLong
+
+//     // The map, centered at Uluru
+//     maps = new google.maps.Map(
+//         document.getElementById('maps'), {
+//             zoom: 4,
+//             center: map
+//         });
+//     // The marker, positioned at
+//     marker = new google.maps.Marker({
+//         position: map,
+//         map: map
+//     });
+// }
+
 
 function buildFourthPage(data) {
     //fetch live data of campground//
 
+    fetch(`https://developer.nps.gov/api/v1/parks?&api_key=${API_key}&campgrounds&limit=40`)
+        .then(response => {
+            console.log(response)
+            return response.json();
+        })
+        .then(result => {
+            console.log(result)
 
+
+
+        })
 }
