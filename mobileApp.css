@@ -87,7 +87,7 @@ padding: 1rem 2rem;
 }
 
 #secondPage {
-    visibility: hiddens;
+    visibility: hidden;
 }
 
 .carousel-item {
