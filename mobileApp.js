@@ -1,9 +1,7 @@
-// https: //developer.nps.gov/api/v1/parks?&api_key=imaoEsf9fjlFLYS7piqcvUZAqO3K6ZwcRSTboJM6
-
 let parkImgs = [];
 let parkList = [];
 let parkInfos = [];
-let parkWeather = [];
+
 
 fetch(`https://developer.nps.gov/api/v1/parks?&api_key=${API_key}&fields=images&limit=20`)
     .then(response => {
@@ -82,7 +80,7 @@ function fillParkListDiv(data) {
     } else {
         document.getElementById("errorDiv").style.visibility = "none";
         let parkListDiv = document.getElementById("dropdownList");
-        parkListDiv.innerHTML = ""
+        parkListDiv.innerHTML = "";
 
         data.forEach((park) => {
 
@@ -138,7 +136,7 @@ function buildSecondPage(data) {
 
     console.log(data)
     let secondPage = document.getElementById("secondPage")
-    secondPage.innerHTML = ""
+    secondPage.innerHTML = "";
 
     let divNavButtons = document.createElement("div")
     divNavButtons.setAttribute("class", "navBTN")
@@ -154,7 +152,7 @@ function buildSecondPage(data) {
 
     })
 
-    //---new fetch for campgrounds//change code//
+    //to do---new fetch below for campgrounds//change code//
     let buttonCampgrounds = document.createElement("button")
     buttonCampgrounds.setAttribute("id", data.id)
     buttonCampgrounds.innerHTML = "Find a Campground"
@@ -214,7 +212,7 @@ function buildSecondPage(data) {
 function buildThirdPage(data) {
 
     let thirdPage = document.getElementById("thirdPage")
-    thirdPage.innerHTML = ""
+    thirdPage.innerHTML = "";
 
     let divHead = document.createElement("div")
     divHead.setAttribute("id", "headDiv")
@@ -276,9 +274,11 @@ function buildThirdPage(data) {
 
 
 function buildFourthPage(data) {
+    let fourthPage = document.getElementById("fourthPage")
+    fourthPage.innerHTML = "";
     //fetch live data of campground//
 
-    fetch(`https://developer.nps.gov/api/v1/parks?&api_key=${API_key}&campgrounds&limit=40`)
+    fetch(`https://developer.nps.gov/api/v1/campgrounds?&api_key=${API_key}&limit=40`)
         .then(response => {
             console.log(response)
             return response.json();
@@ -286,7 +286,10 @@ function buildFourthPage(data) {
         .then(result => {
             console.log(result)
 
-
+            let divCamp = document.createElement("div")
+            divCamp.setAttribute("id", "campDiv")
+            let campName = document.createElement("h2")
+            campName.innerHTML = data.name
 
         })
 }
