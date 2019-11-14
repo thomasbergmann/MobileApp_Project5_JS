@@ -5,7 +5,7 @@ let parkList = [];
 let parkInfos = [];
 let parkWeather = [];
 
-fetch(`https://developer.nps.gov/api/v1/parks?&api_key=${API_key}&fields=images`)
+fetch(`https://developer.nps.gov/api/v1/parks?&api_key=${API_key}&fields=images&limit=20`)
     .then(response => {
         console.log(response)
         return response.json();
@@ -56,7 +56,7 @@ function filterDropdownList(data) {
 
             }
         })
-        fillParkListDiv(filteredList)
+        fillParkListDiv(filteredList);
     })
 };
 
@@ -67,6 +67,7 @@ function filterDropdownList(data) {
 
 function fillParkListDiv(data) {
     console.log(data)
+
     if (data.length == 0) {
         let parkListError = document.getElementById("errorDiv")
         parkListError.innerHTML = ""
@@ -76,7 +77,7 @@ function fillParkListDiv(data) {
 
         parkListError.appendChild(listError)
 
-        document.getElementById("errorDiv").style.visibility = "visible"
+        document.getElementById("errorDiv").style.visibility = "visible";
 
     } else {
         document.getElementById("errorDiv").style.visibility = "none";
@@ -92,10 +93,10 @@ function fillParkListDiv(data) {
             parkListButton.innerHTML = park.fullName + " / " + park.states
             parkListButton.setAttribute("id", park.id)
             parkListButton.addEventListener("click", function (event) {
-                filterContentSecondPage(data, event)
+                filterContentPages(data, event)
             })
             parkListButton.className = "stateClick"
-            parkListButton.style.color = "white"
+            parkListButton.style.color = "white" /*change to black for mobile app*/
 
             parkListDiv.appendChild(divTR)
             divTR.appendChild(parkListName)
@@ -107,30 +108,50 @@ function fillParkListDiv(data) {
 
 
 
-//////////------------------build second page-------------------////////
+///////----------show and hide pages---------------//////////
 
-
-function filterContentSecondPage(data, event) {
+function filterContentPages(data, event) {
     console.log(data)
     console.log(event.target.id)
 
     data.forEach(function (info) {
 
-        // let div = document.getElementById('secondPage');
-
         if (event.target.id === info.id) {
-            // while (div.firstChild && div.removeChild(div.firstChild));
-            buildSecondPage(info)
+            buildSecondPage(info);
+            firstPage.innerHTML = "";
+        } else {
+            buildThirdPage(info);
+            firstPage.innerHTML = "";
+            secondPage.innerHTML = "";
         }
+
     })
 };
 
+//////////------------------build second page-------------------////////
 
 function buildSecondPage(data) {
 
     console.log(data)
     let secondPage = document.getElementById("secondPage")
     secondPage.innerHTML = ""
+
+    let divNavButtons = document.createElement("div")
+    divNavButtons.setAttribute("class", "navBTN")
+    let buttonDirections = document.createElement("button")
+    buttonDirections.setAttribute("id", data.id)
+    buttonDirections.innerHTML = "How to get there"
+    buttonDirections.addEventListener("click", function (event) {
+        filterContentPages(data, event)
+    })
+
+    let buttonCampgrounds = document.createElement("button")
+    buttonCampgrounds.setAttribute("id", data.id)
+    buttonCampgrounds.innerHTML = "Find a Campground"
+    buttonCampgrounds.addEventListener("click", function (event) {
+        filterContentPages(data, event)
+    })
+
 
     let divDescription = document.createElement("div")
     divDescription.setAttribute("id", "descriptionInfo")
@@ -146,14 +167,19 @@ function buildSecondPage(data) {
     let headWeather = document.createElement("h2")
     headWeather.innerHTML = "Weather Information:"
     let contextWaether = document.createElement("div")
-    contextWaether.setAttribute("class", "contextDiv")
+    contextWaether.setAttribute("id", "contextDiv")
     contextWaether.innerHTML = data.weatherInfo
 
-    let backButton = document.createElement("div")
-    backButton.setAttribute("id", "backBTN")
-    let button = document.createElement("button")
-    button.innerHTML = "BACK"
-    button.className = "btn waves-effect waves-teal"
+    let backButton1 = document.createElement("div")
+    backButton1.setAttribute("id", "backBTN")
+    let button1 = document.createElement("button")
+    backButton1.setAttribute("id", "button1")
+    button1.innerHTML = "BACK"
+    button1.className = "btn waves-effect waves-teal"
+
+    secondPage.appendChild(divNavButtons)
+    divNavButtons.appendChild(buttonDirections)
+    divNavButtons.appendChild(buttonCampgrounds)
 
     secondPage.appendChild(divDescription)
     divDescription.appendChild(headDescription)
@@ -161,51 +187,48 @@ function buildSecondPage(data) {
     secondPage.appendChild(divWeather)
     divWeather.appendChild(headWeather)
     divWeather.appendChild(contextWaether)
-    secondPage.appendChild(backButton)
-    backButton.appendChild(button)
+    secondPage.appendChild(backButton1)
+    backButton1.appendChild(button1)
 
-    document.getElementById("secondPage").style.visibility = "visible"
-    document.getElementById("firstPage").style.visibility = "hidden"
+    document.getElementById("secondPage").style.visibility = "visible";
+    // document.getElementById("firstPage").style.visibility = "hidden"
 }
 
 
-///////////-------------------build third Page---------------------////////////////
+/////////-------------------build third Page---------------------////////////////
 
-// function buildThirdPage(data) {
+function buildThirdPage(data) {
 
-//     let thirdPage = document.getElementById("thirdPage")
-//     thirdPage.innerHTML = ""
+    let thirdPage = document.getElementById("thirdPage")
+    thirdPage.innerHTML = ""
 
-//     let divMaps = document.getElementById("maps")
-//     divMaps.src = data.directionsUrl
-//     let headMaps = document.createElement("h2")
-//     headMaps.innerHTML = "Directions:"
-//     let contextMaps = document.createElement("div")
-//     contextDescription.setAttribute("class", "contextDiv")
-//     contextDescription.innerHTML = data.description
+    let divMaps = document.createElement("div")
+    divMaps.setAttribute("id", "maps")
+    divMaps.src = data.directionsUrl
 
+    let hr = document.createElement("hr")
+    hr.style.color = "white"
 
-//     divWeather = document.getElementById("weatherInfo")
-//     let headWeather = document.createElement("h2")
-//     headWeather.innerHTML = "Weather Information:"
-//     let contextWaether = document.createElement("div")
-//     contextWaether.setAttribute("class", "contextDiv")
-//     contextWaether.innerHTML = data.weatherInfo
+    let headMaps = document.createElement("h2")
+    headMaps.innerHTML = "Directions:"
+    let contextMaps = document.createElement("div")
+    contextMaps.setAttribute("id", "contextDiv")
+    contextMaps.innerHTML = data.description
 
 
-//     backButton = document.getElementById("backBTN")
-//     let button = document.createElement("button")
-//     button.innerHTML = "BACK"
-//     button.className = "btn waves-effect waves-teal"
+    backButton2 = document.getElementById("backBTN")
+    let button2 = document.createElement("button")
+    button2.setAttribute("id", "button2")
+    button2.innerHTML = "<-<<---"
+    button2.className = "btn waves-effect waves-teal"
 
-//     secondPage.appendChild(divDescription)
-//     secondPage.appendChild(divWeather)
-//     secondPage.appendChild(backButton)
-//     divDescription.appendChild(headDescription)
-//     divDescription.appendChild(contextDescription)
-//     divWeather.appendChild(headWeather)
-//     divWeather.appendChild(contextWaether)
-//     backButton.appendChild(button)
+    thirdPage.appendChild(divMaps)
+    divMaps.appendChild(headMaps)
+    divMaps.appendChild(contextMaps)
+    thirdPage.appendChild(hr)
+    thirdPage.appendChild(backButton2)
+    backButton2.appendChild(button2)
 
+    document.getElementById("thirdPage").style.visibility = "visible";
 
-// }
+}
