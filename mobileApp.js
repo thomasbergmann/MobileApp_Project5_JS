@@ -119,12 +119,16 @@ function filterContentPages(data, event) {
         if (event.target.id === info.id) {
             buildSecondPage(info);
             firstPage.innerHTML = "";
-        } else {
-            buildThirdPage(info);
-            firstPage.innerHTML = "";
-            secondPage.innerHTML = "";
-        }
+            // } else {
+            //     document.getElementById("secondPage").style.visibility = "none";
 
+            //     buildThirdPage(info);
+            //     firstPage.innerHTML = "";
+            //     secondPage.innerHTML = "";
+
+            // }
+
+        }
     })
 };
 
@@ -140,23 +144,28 @@ function buildSecondPage(data) {
     divNavButtons.setAttribute("class", "navBTN")
     let buttonDirections = document.createElement("button")
     buttonDirections.setAttribute("id", data.id)
+    console.log(buttonDirections)
     buttonDirections.innerHTML = "How to get there"
     buttonDirections.addEventListener("click", function (event) {
-        filterContentPages(data, event)
+        buildThirdPage(data, event)
+        secondPage.innerHTML = "";
+
     })
 
+    //---new fetch for campgrounds//change code//
     let buttonCampgrounds = document.createElement("button")
     buttonCampgrounds.setAttribute("id", data.id)
     buttonCampgrounds.innerHTML = "Find a Campground"
     buttonCampgrounds.addEventListener("click", function (event) {
-        filterContentPages(data, event)
+        buildFourthPage(data, event)
+        thirdPage.innerHTML = "";
     })
 
 
     let divDescription = document.createElement("div")
     divDescription.setAttribute("id", "descriptionInfo")
     let headDescription = document.createElement("h2")
-    headDescription.innerHTML = "Description:"
+    headDescription.innerHTML = "Park Description:"
     let contextDescription = document.createElement("div")
     contextDescription.setAttribute("class", "contextDiv")
     contextDescription.innerHTML = data.description
@@ -176,6 +185,9 @@ function buildSecondPage(data) {
     backButton1.setAttribute("id", "button1")
     button1.innerHTML = "BACK"
     button1.className = "btn waves-effect waves-teal"
+    // button1.addEventListener("click",) => {
+
+    // }
 
     secondPage.appendChild(divNavButtons)
     divNavButtons.appendChild(buttonDirections)
@@ -188,7 +200,7 @@ function buildSecondPage(data) {
     divWeather.appendChild(headWeather)
     divWeather.appendChild(contextWaether)
     secondPage.appendChild(backButton1)
-    backButton1.appendChild(button1)
+    backButton1.appendChild(button1);
 
     document.getElementById("secondPage").style.visibility = "visible";
     // document.getElementById("firstPage").style.visibility = "hidden"
@@ -213,7 +225,7 @@ function buildThirdPage(data) {
     headMaps.innerHTML = "Directions:"
     let contextMaps = document.createElement("div")
     contextMaps.setAttribute("id", "contextDiv")
-    contextMaps.innerHTML = data.description
+    contextMaps.innerHTML = data.directions
 
 
     backButton2 = document.getElementById("backBTN")
@@ -230,5 +242,11 @@ function buildThirdPage(data) {
     backButton2.appendChild(button2)
 
     document.getElementById("thirdPage").style.visibility = "visible";
+
+}
+
+function buildFourthPage(data) {
+    //fetch live data of campground//
+
 
 }
