@@ -23,7 +23,7 @@ fetch(`http://localhost:8080/response.json`)
                 p.innerHTML = result.data[i].name;
                 let img = document.createElement("img");
                 //img.src = result.data[i].images[x].url;
-                img.src = "http://localhost:8081/resize?w=200&url=" + result.data[i].images[x].url;
+                img.src = "http://localhost:8081/resize?format=webp&w=200&url=" + result.data[i].images[x].url;
 
                 a.appendChild(img)
                 a.appendChild(p)
