@@ -2,8 +2,8 @@ let parkImgs = [];
 let parkList = [];
 let parkInfos = [];
 
-
-fetch(`https://developer.nps.gov/api/v1/parks?&api_key=${API_key}&fields=images&limit=20`)
+//fetch(`https://developer.nps.gov/api/v1/parks?&api_key=${API_key}&fields=images&limit=20`)
+fetch(`https://271105011696-nsp-apifake.s3.eu-central-1.amazonaws.com/response.json`)
     .then(response => {
         console.log(response)
         return response.json();
