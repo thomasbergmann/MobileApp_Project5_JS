@@ -3,7 +3,7 @@ let parkList = [];
 let parkInfos = [];
 
 //fetch(`https://developer.nps.gov/api/v1/parks?&api_key=${API_key}&fields=images&limit=20`)
-fetch(`https://271105011696-nsp-apifake.s3.eu-central-1.amazonaws.com/response.json`)
+fetch(`http://localhost:8080/response.json`)
     .then(response => {
         console.log(response)
         return response.json();
@@ -22,7 +22,8 @@ fetch(`https://271105011696-nsp-apifake.s3.eu-central-1.amazonaws.com/response.j
                 p.setAttribute("class", "nameImg");
                 p.innerHTML = result.data[i].name;
                 let img = document.createElement("img");
-                img.src = "https://demo.cloudimg.io/width/200/n/" + result.data[i].images[x].url;
+                //img.src = result.data[i].images[x].url;
+                img.src = "http://localhost:8081/resize?w=200&url=" + result.data[i].images[x].url;
 
                 a.appendChild(img)
                 a.appendChild(p)
