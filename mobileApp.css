@@ -1,9 +1,17 @@
 body {
-    background-image: url("darksky.jpg");
+    background: url("darksky.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
 
+
+    /* background-image: url("darksky.jpg");
+    background-size: cover;
+    margin: 0px;
+    padding: 0px;
     /* background-position: center; */
-    background-repeat: no-repeat;
+    /* background-repeat: no-repeat; */
     color: white;
 }
 
@@ -43,7 +51,7 @@ body {
 
 h1 {
     font-size: 5vw;
-    text-shadow: 3px 3px 5px rgb(136, 134, 134);
+    text-shadow: 4px 4px 6px rgb(136, 134, 134);
 }
 
 h2 {
@@ -82,12 +90,25 @@ padding: 1rem 2rem;
     max-height: 380px;
 } */
 
-#firstPage {
-    visibility: visible;
+
+.firstPage {
+    display: none;
 }
 
-#secondPage {
-    visibility: hidden;
+.secondPage {
+    display: none;
+}
+
+.thirdPage {
+    display: none;
+}
+
+.fourthPage {
+    display: none;
+}
+
+.active {
+    display: block;
 }
 
 .carousel-item {
@@ -120,7 +141,7 @@ padding: 1rem 2rem;
 
 #searchButton {
     vertical-align: 25%;
-    /* color: white; */
+    color: black;
 }
 
 .search {

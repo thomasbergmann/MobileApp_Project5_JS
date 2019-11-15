@@ -14,6 +14,7 @@ fetch(`https://developer.nps.gov/api/v1/parks?&api_key=${API_key}&fields=images&
 
         ///------------builds carousel and fills content-------------/////
         let carousel = document.getElementById("carouselID");
+
         for (let i = 0; i < result.data.length; i++) {
             for (let x = 0; x < result.data[i].images.length; x++) {
                 let a = document.createElement("a");
@@ -78,8 +79,9 @@ function fillParkListDiv(data) {
         document.getElementById("errorDiv").style.visibility = "visible";
 
     } else {
-        document.getElementById("errorDiv").style.visibility = "none";
-        let parkListDiv = document.getElementById("dropdownList");
+        document.getElementById("errorDiv").style.visibility = "hidden";
+        let parkListDiv = document.getElementById("dropdownList")
+        parkListDiv.classList.add;
         parkListDiv.innerHTML = "";
 
         data.forEach((park) => {
@@ -90,6 +92,7 @@ function fillParkListDiv(data) {
             let parkListButton = document.createElement("p")
             parkListButton.innerHTML = park.fullName + " / " + park.states
             parkListButton.setAttribute("id", park.id)
+            parkListButton.setAttribute("data-parkCode", park.parkCode)
             parkListButton.addEventListener("click", function (event) {
                 filterContentPages(data, event)
             })
@@ -116,15 +119,10 @@ function filterContentPages(data, event) {
 
         if (event.target.id === info.id) {
             buildSecondPage(info);
-            firstPage.innerHTML = "";
-            // } else {
-            //     document.getElementById("secondPage").style.visibility = "none";
+            // document.getElementById("firstPage").classList.remove("active")
+            // document.getElementById("thirdPage").classList.remove("active")
+            // document.getElementById("secondPage").classList.add("active")
 
-            //     buildThirdPage(info);
-            //     firstPage.innerHTML = "";
-            //     secondPage.innerHTML = "";
-
-            // }
 
         }
     })
@@ -132,33 +130,39 @@ function filterContentPages(data, event) {
 
 //////////------------------build second page-------------------////////
 
-function buildSecondPage(data) {
+function buildSecondPage(parks) {
+    console.log(parks)
 
-    console.log(data)
     let secondPage = document.getElementById("secondPage")
     secondPage.innerHTML = "";
 
     let divNavButtons = document.createElement("div")
     divNavButtons.setAttribute("class", "navBTN")
     let buttonDirections = document.createElement("button")
-    buttonDirections.setAttribute("id", data.id)
+    buttonDirections.setAttribute("id", parks.id)
     console.log(buttonDirections)
     buttonDirections.innerHTML = "How to get there"
     buttonDirections.addEventListener("click", function (event) {
-        buildThirdPage(data, event)
-        secondPage.innerHTML = "";
-        // initMap()
+        buildThirdPage(parks, event)
 
+        // document.getElementById("secondPage").classList.remove("active")
+        // document.getElementById("thirdPage").classList.add("active")
+
+        // initMap()
 
     })
 
-    //to do---new fetch below for campgrounds//change code//
+
     let buttonCampgrounds = document.createElement("button")
-    buttonCampgrounds.setAttribute("id", data.id)
+    buttonCampgrounds.setAttribute("data-parkCode", parks.parkCode)
     buttonCampgrounds.innerHTML = "Find a Campground"
     buttonCampgrounds.addEventListener("click", function (event) {
-        buildFourthPage(data, event)
-        thirdPage.innerHTML = "";
+        let parkCode = event.target.getAttribute("data-parkCode");
+        buildFourthPage(event, parkCode)
+
+        // document.getElementById("thirdPage").classList.remove("active")
+        // document.getElementById("fourthPage").classList.add("active")
+
     })
 
 
@@ -168,7 +172,7 @@ function buildSecondPage(data) {
     headDescription.innerHTML = "Park Description:"
     let contextDescription = document.createElement("div")
     contextDescription.setAttribute("id", "contextDiv")
-    contextDescription.innerHTML = data.description
+    contextDescription.innerHTML = parks.description
 
 
     let divWeather = document.createElement("div")
@@ -177,7 +181,7 @@ function buildSecondPage(data) {
     headWeather.innerHTML = "Weather Information:"
     let contextWaether = document.createElement("div")
     contextWaether.setAttribute("id", "contextDiv")
-    contextWaether.innerHTML = data.weatherInfo
+    contextWaether.innerHTML = parks.weatherInfo
 
     let backButton1 = document.createElement("div")
     backButton1.setAttribute("id", "backBTN")
@@ -185,8 +189,13 @@ function buildSecondPage(data) {
     backButton1.setAttribute("id", "button1")
     button1.innerHTML = "BACK"
     button1.className = "btn waves-effect waves-teal"
+
+    //by clicking first Page is shown and second Page is hidden
     button1.addEventListener("click", function () {
-        window.history.back();
+
+        document.getElementById("firstPage").classList.add("active")
+        document.getElementById("secondPage").classList.remove("active")
+
     });
 
     secondPage.appendChild(divNavButtons)
@@ -202,14 +211,15 @@ function buildSecondPage(data) {
     secondPage.appendChild(backButton1)
     backButton1.appendChild(button1);
 
-    document.getElementById("secondPage").style.visibility = "visible";
+    document.getElementById("firstPage").classList.remove("active")
+    document.getElementById("secondPage").classList.add("active")
 }
 
 
 /////////-------------------build third Page---------------------////////////////
 
 
-function buildThirdPage(data) {
+function buildThirdPage(parks) {
 
     let thirdPage = document.getElementById("thirdPage")
     thirdPage.innerHTML = "";
@@ -220,7 +230,7 @@ function buildThirdPage(data) {
     headMaps.innerHTML = "Directions:"
     let contextMaps = document.createElement("div")
     contextMaps.setAttribute("id", "contextDiv")
-    contextMaps.innerHTML = data.directionsInfo
+    contextMaps.innerHTML = parks.directionsInfo
 
     let hr = document.createElement("hr")
     hr.style.color = "white"
@@ -228,18 +238,22 @@ function buildThirdPage(data) {
     let divMaps = document.createElement("div")
     divMaps.setAttribute("id", "maps")
     let mapsLink = document.createElement("a")
-    mapsLink.innerHTML = data.directionsUrl
+    mapsLink.innerHTML = parks.directionsUrl
 
 
     backButton2 = document.getElementById("backBTN")
     let button2 = document.createElement("button")
     button2.setAttribute("id", "button2")
-    button2.innerHTML = "<-<<---"
-    button2.className = "btn waves-effect waves-teal"
-    button2.addEventListener("click", function () {
-        window.history.back();
-    });
+    button2.innerHTML = "BACK"
+    button2.className = "btn waves-effect waves-teal onclick"
 
+    //by clicking second Page is shown and third Page is hidden
+    button2.addEventListener("click", function () {
+
+        document.getElementById("secondPage").classList.add("active")
+        document.getElementById("thirdPage").classList.remove("active")
+
+    });
 
     thirdPage.appendChild(divHead)
     divHead.appendChild(headMaps)
@@ -250,7 +264,8 @@ function buildThirdPage(data) {
     thirdPage.appendChild(backButton2)
     backButton2.appendChild(button2)
 
-    document.getElementById("thirdPage").style.visibility = "visible";
+    document.getElementById("secondPage").classList.remove("active")
+    document.getElementById("thirdPage").classList.add("active")
 
 }
 // let maps = document.getElementById("maps")
@@ -271,14 +286,18 @@ function buildThirdPage(data) {
 //         map: map
 //     });
 // }
+/// extract data attrib out of the event
 
 
-function buildFourthPage(data) {
+function buildFourthPage(event, parkCode) {
+    console.log(event)
+    console.log(parkCode)
+
     let fourthPage = document.getElementById("fourthPage")
     fourthPage.innerHTML = "";
-    //fetch live data of campground//
 
-    fetch(`https://developer.nps.gov/api/v1/campgrounds?&api_key=${API_key}&limit=40`)
+    //fetch live data of specific campground//
+    fetch(`https://developer.nps.gov/api/v1/campgrounds?&api_key=${API_key}&parkCode=${parkCode}`)
         .then(response => {
             console.log(response)
             return response.json();
@@ -286,10 +305,36 @@ function buildFourthPage(data) {
         .then(result => {
             console.log(result)
 
-            let divCamp = document.createElement("div")
-            divCamp.setAttribute("id", "campDiv")
-            let campName = document.createElement("h2")
-            campName.innerHTML = data.name
+            if (result.data == 0) {
+                let divErrorCamp = document.createElement("div")
+                divErrorCamp.innerHTML = "Sorry there`s no Campground listed"
 
+                fourthPage.appendChild(divErrorCamp)
+
+                document.getElementById("secondPage").classList.remove("active")
+                document.getElementById("thirdPage").classList.remove("active")
+                document.getElementById("fourthPage").classList.add("active")
+
+
+            } else {
+
+                data.forEach(function (camp) {
+
+                    let divCamp = document.createElement("div")
+                    divCamp.setAttribute("id", "campDiv")
+                    let campName = document.createElement("h1")
+                    campName.innerHTML = camp.name
+                    let campDescription = document.createElement("tr")
+                    campDescription.innerHTML = camp.description
+
+                    fourthPage.appendChild(divCamp)
+                    divCamp.appendChild(campName)
+                    divCamp.appendChild(campDescription)
+
+                    document.getElementById("secondPage").classList.remove("active")
+                    document.getElementById("thirdPage").classList.remove("active")
+                    document.getElementById("fourthPage").classList.add("active")
+                })
+            }
         })
 }
