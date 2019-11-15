@@ -22,7 +22,7 @@ fetch(`https://271105011696-nsp-apifake.s3.eu-central-1.amazonaws.com/response.j
                 p.setAttribute("class", "nameImg");
                 p.innerHTML = result.data[i].name;
                 let img = document.createElement("img");
-                img.src = result.data[i].images[x].url;
+                img.src = "https://demo.cloudimg.io/width/200/n/" + result.data[i].images[x].url;
 
                 a.appendChild(img)
                 a.appendChild(p)
