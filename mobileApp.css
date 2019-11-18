@@ -5,13 +5,6 @@ body {
     -o-background-size: cover;
     background-size: cover;
 
-
-    /* background-image: url("darksky.jpg");
-    background-size: cover;
-    margin: 0px;
-    padding: 0px;
-    /* background-position: center; */
-    /* background-repeat: no-repeat; */
     color: white;
 }
 
@@ -65,31 +58,17 @@ h4 {
 }
 
 
-/* ----------setting to hide and display pages-------------- */
-/* 
-.pages {
-    /* display: none; */
-/* width: 100%;
-min-height: 100%;
-position: absolute;
-padding: 1rem 2rem;
-} */
 
-/* .active {
-    display: block;
-} */
-
-/* h1 {
-    transition: all 0.4s;
+.navBTN {
+    display: flex;
+    justify-content: center;
 }
 
-*/
-/*-------------first page style---------*/
-/* #carouselID div {
-    max-width: 320px;
-    max-height: 380px;
+/* .carousel {
+    display: none;
 } */
 
+/*-------------first page style---------*/
 
 .firstPage {
     display: none;
@@ -108,7 +87,9 @@ padding: 1rem 2rem;
 }
 
 .active {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .carousel-item {
@@ -123,7 +104,7 @@ padding: 1rem 2rem;
     display: flex;
     justify-content: center;
     text-align: center;
-    align-items: center;
+    visibility: visible;
 }
 
 #searchContainer input {
@@ -152,11 +133,8 @@ padding: 1rem 2rem;
 }
 
 #errorDiv {
-    /* max-width: 20rem;
-    max-height: 12rem; */
     position: relative;
     display: flex;
-    /* flex-direction: column; */
     justify-content: center;
     visibility: hidden;
 }
@@ -183,16 +161,24 @@ padding: 1rem 2rem;
     align-self: center;
 }
 
+/*-------------setting up second Page-----*/
+
+.contextInfo {
+    width: 25rem;
+    position: relative;
+    text-align: center;
+    padding: 20px;
+    margin: 0px;
+
+}
 
 
 /*-----------back button--------------*/
 
 #backBTN {
-    /* width: 47px;
-    height: 17px; */
     text-align: center;
     font-optical-sizing: auto;
     font-size: 1vw;
-    border-radius: 5px;
-    text-align: center;
+    /* border-radius: 10em; */
+
 }

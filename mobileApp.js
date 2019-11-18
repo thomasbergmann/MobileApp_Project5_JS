@@ -31,31 +31,32 @@ fetch(`https://271105011696-nsp-apifake.s3.eu-central-1.amazonaws.com/response.j
             }
         }
         M.AutoInit();
-        // fillParkListDiv(result.data);
-        filterDropdownList(result.data);
-        // filterContentSecondPage(result.data);
+        filterParkListDiv(result.data);
     })
     .catch(function (error) {
         console.log(error, "this is wrong");
     });
 
 
-function filterDropdownList(data) {
+function filterParkListDiv(data) {
 
     document.getElementById("searchButton").addEventListener("click", () => {
         // when clicked shows filtered search below
         let searchTerm = document.getElementById("searchInput").value
+        console.log(document.getElementById("searchInput").value)
         console.log(searchTerm)
         let filteredList = [];
         data.forEach(function (park) {
-            if (searchTerm.toLowerCase() === park.name.toLowerCase() || searchTerm.toLowerCase() === park.states.toLowerCase()) {
+            if (searchTerm.toLowerCase() === park.name.toLowerCase() || searchTerm.toLowerCase() === park.states.toLowerCase() || searchTerm === "") {
                 filteredList.push(park)
 
                 document.getElementById("dropdownList").style.visibility = "visible"
+                document.getElementById("carouselID").style.display = "block"
+
 
             }
         })
-        fillParkListDiv(filteredList);
+        buildParkListDiv(filteredList);
     })
 };
 
@@ -64,8 +65,13 @@ function filterDropdownList(data) {
 //////----------------create and fill park list div----------------//////
 
 
-function fillParkListDiv(data) {
+function buildParkListDiv(data) {
     console.log(data)
+
+    //trying
+    // document.getElementById("carouselID").style.visibility = "visible";
+    // document.getElementById("carouselID").classList.add("active")
+
 
     if (data.length == 0) {
         let parkListError = document.getElementById("errorDiv")
@@ -77,9 +83,10 @@ function fillParkListDiv(data) {
         parkListError.appendChild(listError)
 
         document.getElementById("errorDiv").style.visibility = "visible";
+        // document.getElementById("carouselID").style.display = "none"
 
     } else {
-        document.getElementById("errorDiv").style.visibility = "hidden";
+
         let parkListDiv = document.getElementById("dropdownList")
         parkListDiv.classList.add;
         parkListDiv.innerHTML = "";
@@ -93,6 +100,7 @@ function fillParkListDiv(data) {
             parkListButton.innerHTML = park.fullName + " / " + park.states
             parkListButton.setAttribute("id", park.id)
             parkListButton.setAttribute("data-parkCode", park.parkCode)
+            //----by click event the  parkId and parkCode gets transmitted----//
             parkListButton.addEventListener("click", function (event) {
                 filterContentParkList(data, event)
             })
@@ -103,6 +111,9 @@ function fillParkListDiv(data) {
             parkListDiv.appendChild(divTR)
             divTR.appendChild(parkListName)
             divTR.appendChild(parkListButton)
+
+            document.getElementById("carouselID").style.display = "none"
+
         })
     }
 
@@ -161,7 +172,7 @@ function buildSecondPage(parks) {
 
 
     let divDescription = document.createElement("div")
-    divDescription.setAttribute("id", "descriptionInfo")
+    divDescription.setAttribute("class", "contextInfo")
     let headDescription = document.createElement("h2")
     headDescription.innerHTML = "Park Description:"
     let contextDescription = document.createElement("div")
@@ -170,7 +181,7 @@ function buildSecondPage(parks) {
 
 
     let divWeather = document.createElement("div")
-    divWeather.setAttribute("id", "weatherInfo")
+    divWeather.setAttribute("class", "contextInfo")
     let headWeather = document.createElement("h2")
     headWeather.innerHTML = "Weather Information:"
     let contextWeather = document.createElement("div")
@@ -180,8 +191,9 @@ function buildSecondPage(parks) {
 
     let backButton1 = document.createElement("div")
     backButton1.setAttribute("id", "backBTN")
+
     let button1 = document.createElement("button")
-    backButton1.setAttribute("id", "button1")
+    button1.setAttribute("id", "button1")
     button1.innerHTML = "BACK"
     button1.className = "btn waves-effect waves-teal"
 
@@ -220,7 +232,7 @@ function buildThirdPage(parks) {
     thirdPage.innerHTML = "";
 
     let divHead = document.createElement("div")
-    divHead.setAttribute("id", "headDiv")
+    divHead.setAttribute("class", "contextInfo")
     let headMaps = document.createElement("h2")
     headMaps.innerHTML = "Directions:"
     let contextMaps = document.createElement("div")
@@ -245,7 +257,7 @@ function buildThirdPage(parks) {
     button2.innerHTML = "BACK"
     button2.className = "btn waves-effect waves-teal onclick"
 
-    //by clicking second Page is shown and third Page is hidden
+    //by clicking second Page is shown and third Page is hidden---//
     button2.addEventListener("click", function () {
 
         document.getElementById("secondPage").classList.add("active")
@@ -257,8 +269,8 @@ function buildThirdPage(parks) {
     thirdPage.appendChild(divHead)
     divHead.appendChild(headMaps)
     divHead.appendChild(contextMaps)
-    thirdPage.appendChild(hr)
-    thirdPage.appendChild(divMaps)
+    divHead.appendChild(hr)
+    divHead.appendChild(divMaps)
     divMaps.appendChild(mapsLink)
     thirdPage.appendChild(backButton2)
     backButton2.appendChild(button2)
@@ -306,6 +318,7 @@ function buildFourthPage(event, parkCode) {
 
             if (result.data == 0) {
                 let divErrorCamp = document.createElement("div")
+                divErrorCamp.setAttribute("class", "contextInfo")
                 divErrorCamp.innerHTML = "Sorry there`s no Campground listed"
 
                 let backButton3 = document.createElement("div")
