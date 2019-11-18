@@ -10,7 +10,8 @@ fetch(`http://localhost:8080/response.json`)
         console.log(result)
         console.log(result.data[0].images[0].url); //First pic
 
-        ///------------builds carousel and fills content-------------/////
+        //////----------------------------------------------builds carousel and fills content----------------------------------------///////
+
         let carousel = document.getElementById("carouselID");
 
         for (let i = 0; i < result.data.length; i++) {
@@ -21,7 +22,8 @@ fetch(`http://localhost:8080/response.json`)
                 p.setAttribute("class", "nameImg");
                 p.innerHTML = result.data[i].name;
                 let img = document.createElement("img");
-                img.src = "http://localhost:8081/resize?format=webp&w=200&url=" + result.data[i].images[x].url;
+                img.src = "https://demo.cloudimg.io/width/200/n/" + result.data[i].images[x].url;
+                //img.src = "http://localhost:8081/resize?format=webp&w=200&url=" + result.data[i].images[x].url;
                 a.appendChild(img)
                 a.appendChild(p)
                 carousel.appendChild(a)
@@ -35,6 +37,8 @@ fetch(`http://localhost:8080/response.json`)
     });
 
 
+//////--------------------------------------------filters the list of park - depending on search input---------------------------------//////
+
 function filterParkListDiv(data) {
 
     document.getElementById("searchButton").addEventListener("click", () => {
@@ -44,12 +48,18 @@ function filterParkListDiv(data) {
         console.log(searchTerm)
         let filteredList = [];
         data.forEach(function (park) {
-            if (searchTerm.toLowerCase() === park.name.toLowerCase() || searchTerm.toLowerCase() === park.states.toLowerCase() || searchTerm === "") {
+
+
+
+            if (searchTerm.toLowerCase() === park.name.toLowerCase() || searchTerm.toLowerCase() === park.states.toLowerCase()) {
                 filteredList.push(park)
+                document.getElementById("dropdownList").style.visibility = "visible";
 
-                document.getElementById("dropdownList").style.visibility = "visible"
-                document.getElementById("carouselID").style.display = "block"
+            } else if (searchTerm == 0) {
 
+                document.getElementById("carouselID").style.display = "block";
+                document.getElementById("errorDiv").style.visibility = "hidden";
+                document.getElementById("dropdownList").style.visibility = "hidden";
 
             }
         })
@@ -59,15 +69,11 @@ function filterParkListDiv(data) {
 
 
 
-//////----------------create and fill park list div----------------//////
+//////----------------------------------------------creates and fills park list div-------------------------------------------------//////
 
 
 function buildParkListDiv(data) {
     console.log(data)
-
-    //trying
-    // document.getElementById("carouselID").style.visibility = "visible";
-    // document.getElementById("carouselID").classList.add("active")
 
 
     if (data.length == 0) {
@@ -80,7 +86,7 @@ function buildParkListDiv(data) {
         parkListError.appendChild(listError)
 
         document.getElementById("errorDiv").style.visibility = "visible";
-        // document.getElementById("carouselID").style.display = "none"
+        document.getElementById("carouselID").style.display = "none";
 
     } else {
 
@@ -109,7 +115,7 @@ function buildParkListDiv(data) {
             divTR.appendChild(parkListName)
             divTR.appendChild(parkListButton)
 
-            document.getElementById("carouselID").style.display = "none"
+            document.getElementById("carouselID").style.display = "none";
 
         })
     }
@@ -118,7 +124,7 @@ function buildParkListDiv(data) {
 
 
 
-///////----------filters which park of list is shown and will displayed on second page---------------//////////
+///////----------------------filters which park of list is shown and will displayed on second page--------------------------------------//////////
 
 function filterContentParkList(data, event) {
     console.log(data)
@@ -134,7 +140,7 @@ function filterContentParkList(data, event) {
     })
 };
 
-//////////--------------------------build second page-------------------////////
+//////////-----------------------------------------------------builds second page--------------------------------------------------////////
 
 function buildSecondPage(parks) {
     console.log(parks)
@@ -142,6 +148,8 @@ function buildSecondPage(parks) {
     let secondPage = document.getElementById("secondPage")
     secondPage.innerHTML = "";
 
+
+    //------creates Nav Buttons----//
     let divNavButtons = document.createElement("div")
     divNavButtons.setAttribute("class", "navBTN")
     let buttonDirections = document.createElement("button")
@@ -151,11 +159,9 @@ function buildSecondPage(parks) {
     buttonDirections.addEventListener("click", function (event) {
         buildThirdPage(parks, event)
 
-
         // initMap()
 
     })
-
 
     let buttonCampgrounds = document.createElement("button")
     buttonCampgrounds.setAttribute("data-parkCode", parks.parkCode)
@@ -186,15 +192,16 @@ function buildSecondPage(parks) {
     contextWeather.innerHTML = parks.weatherInfo
     // contextWeather.src = parks.weatherInfo
 
+    //------creates BACK button-------//
     let backButton1 = document.createElement("div")
     backButton1.setAttribute("id", "backBTN")
 
     let button1 = document.createElement("button")
-    button1.setAttribute("id", "button1")
+    button1.setAttribute("id", "button")
     button1.innerHTML = "BACK"
     button1.className = "btn waves-effect waves-teal"
 
-    //------by clicking first Page is shown and second Page is hidden---//
+    //------by clicking first Page is shown and second Page is hidden-----//
     button1.addEventListener("click", function () {
 
         document.getElementById("firstPage").classList.add("active")
@@ -245,12 +252,12 @@ function buildThirdPage(parks) {
     mapsLink.innerHTML = parks.directionsUrl
 
 
-
+    //------creates BACK button-------//
     let backButton2 = document.createElement("div")
     backButton2.setAttribute("id", "backBTN")
 
     let button2 = document.createElement("button")
-    button2.setAttribute("id", "button2")
+    button2.setAttribute("id", "button")
     button2.innerHTML = "BACK"
     button2.className = "btn waves-effect waves-teal onclick"
 
@@ -316,14 +323,14 @@ function buildFourthPage(event, parkCode) {
             if (result.data == 0) {
                 let divErrorCamp = document.createElement("div")
                 divErrorCamp.setAttribute("class", "contextInfo")
-                divErrorCamp.innerHTML = "Sorry there`s no Campground listed"
+                divErrorCamp.innerHTML = "Sorry there are no Campgrounds listed"
 
                 let backButton3 = document.createElement("div")
                 backButton3.setAttribute("id", "backBTN")
 
                 let button3 = document.createElement("button")
-                button3.setAttribute("id", "button3")
-                button3.innerHTML = "BACK"
+                button3.setAttribute("id", "button")
+                button3.innerHTML = "Previous Page"
                 button3.className = "btn waves-effect waves-teal onclick"
 
                 //by clicking second Page is shown and fourth Page is hidden
@@ -363,7 +370,7 @@ function buildFourthPage(event, parkCode) {
                     backButton3.setAttribute("id", "backBTN")
 
                     let button3 = document.createElement("button")
-                    button3.setAttribute("id", "button3")
+                    button3.setAttribute("id", "button")
                     button3.innerHTML = "BACK"
                     button3.className = "btn waves-effect waves-teal onclick"
 
@@ -382,10 +389,9 @@ function buildFourthPage(event, parkCode) {
                     fourthPage.appendChild(backButton3)
                     backButton3.appendChild(button3)
 
-
+                    document.getElementById("fourthPage").classList.add("active")
                     document.getElementById("secondPage").classList.remove("active")
                     document.getElementById("thirdPage").classList.remove("active")
-                    document.getElementById("fourthPage").classList.add("active")
                 })
             }
         })

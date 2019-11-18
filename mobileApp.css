@@ -13,25 +13,24 @@ body {
 }
 
 /*generell setting for header*/
+#header {
+    position: sticky;
+}
 
 .navBar {
-    padding: 20px;
     position: absolute;
-    top: 3vh;
     display: flex;
     position: sticky;
-    margin-top: 1vh;
+    /* margin-top: 1vh; */
 }
 
 .navRight {
     position: absolute;
-    top: 3vh;
     right: 5vw;
 }
 
 .navLeft {
     position: absolute;
-    top: 3vh;
     left: 5vw;
 }
 
@@ -57,12 +56,6 @@ h4 {
     text-shadow: 3px 3px 5px rgb(136, 134, 134);
 }
 
-
-
-.navBTN {
-    display: flex;
-    justify-content: center;
-}
 
 /* .carousel {
     display: none;
@@ -162,13 +155,18 @@ h4 {
 }
 
 /*-------------setting up second Page-----*/
+.navBTN {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    margin: 20px;
+}
 
 .contextInfo {
     width: 25rem;
     position: relative;
     text-align: center;
-    padding: 20px;
-    margin: 0px;
+    /* vertical-align: middle; */
 
 }
 
@@ -176,9 +174,17 @@ h4 {
 /*-----------back button--------------*/
 
 #backBTN {
-    text-align: center;
     font-optical-sizing: auto;
     font-size: 1vw;
-    /* border-radius: 10em; */
+    padding: 30px;
+
+}
+
+#button {
+    max-width: auto;
+    max-height: 2em;
+    border-radius: 5px;
+    text-align: center;
+
 
 }
