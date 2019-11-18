@@ -308,7 +308,27 @@ function buildFourthPage(event, parkCode) {
                 let divErrorCamp = document.createElement("div")
                 divErrorCamp.innerHTML = "Sorry there`s no Campground listed"
 
+                let backButton3 = document.createElement("div")
+                backButton3.setAttribute("id", "backBTN")
+
+                let button3 = document.createElement("button")
+                button3.setAttribute("id", "button3")
+                button3.innerHTML = "BACK"
+                button3.className = "btn waves-effect waves-teal onclick"
+
+                //by clicking second Page is shown and fourth Page is hidden
+                button3.addEventListener("click", function () {
+
+                    document.getElementById("secondPage").classList.add("active")
+                    document.getElementById("fourthPage").classList.remove("active")
+
+                });
+
+
                 fourthPage.appendChild(divErrorCamp)
+                divErrorCamp.appendChild(backButton3)
+                backButton3.appendChild(button3)
+
 
                 document.getElementById("fourthPage").classList.add("active")
                 document.getElementById("secondPage").classList.remove("active")
