@@ -2,8 +2,8 @@ let parkImgs = [];
 let parkList = [];
 let parkInfos = [];
 
-
-fetch(`https://developer.nps.gov/api/v1/parks?&api_key=${API_key}&fields=images&limit=20`)
+//fetch(`https://developer.nps.gov/api/v1/parks?&api_key=${API_key}&fields=images&limit=20`)
+fetch(`http://localhost:8080/response.json`)
     .then(response => {
         console.log(response)
         return response.json();
@@ -23,7 +23,8 @@ fetch(`https://developer.nps.gov/api/v1/parks?&api_key=${API_key}&fields=images&
                 p.setAttribute("class", "nameImg");
                 p.innerHTML = result.data[i].name;
                 let img = document.createElement("img");
-                img.src = result.data[i].images[x].url;
+                //img.src = result.data[i].images[x].url;
+                img.src = "http://localhost:8081/resize?format=webp&w=200&url=" + result.data[i].images[x].url;
 
                 a.appendChild(img)
                 a.appendChild(p)
