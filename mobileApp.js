@@ -94,10 +94,11 @@ function fillParkListDiv(data) {
             parkListButton.setAttribute("id", park.id)
             parkListButton.setAttribute("data-parkCode", park.parkCode)
             parkListButton.addEventListener("click", function (event) {
-                filterContentPages(data, event)
+                filterContentParkList(data, event)
             })
+
             parkListButton.className = "stateClick"
-            parkListButton.style.color = "white" /*change to black for mobile app*/
+            parkListButton.style.color = "white"
 
             parkListDiv.appendChild(divTR)
             divTR.appendChild(parkListName)
@@ -109,9 +110,9 @@ function fillParkListDiv(data) {
 
 
 
-///////----------show and hide pages---------------//////////
+///////----------filters which park of list is shown and will displayed on second page---------------//////////
 
-function filterContentPages(data, event) {
+function filterContentParkList(data, event) {
     console.log(data)
     console.log(event.target.id)
 
@@ -119,16 +120,13 @@ function filterContentPages(data, event) {
 
         if (event.target.id === info.id) {
             buildSecondPage(info);
-            // document.getElementById("firstPage").classList.remove("active")
-            // document.getElementById("thirdPage").classList.remove("active")
-            // document.getElementById("secondPage").classList.add("active")
 
 
         }
     })
 };
 
-//////////------------------build second page-------------------////////
+//////////--------------------------build second page-------------------////////
 
 function buildSecondPage(parks) {
     console.log(parks)
@@ -145,8 +143,6 @@ function buildSecondPage(parks) {
     buttonDirections.addEventListener("click", function (event) {
         buildThirdPage(parks, event)
 
-        // document.getElementById("secondPage").classList.remove("active")
-        // document.getElementById("thirdPage").classList.add("active")
 
         // initMap()
 
@@ -156,12 +152,12 @@ function buildSecondPage(parks) {
     let buttonCampgrounds = document.createElement("button")
     buttonCampgrounds.setAttribute("data-parkCode", parks.parkCode)
     buttonCampgrounds.innerHTML = "Find a Campground"
+    //------through event on click the parkcode is transmitted---and fourth page is build--//
     buttonCampgrounds.addEventListener("click", function (event) {
         let parkCode = event.target.getAttribute("data-parkCode");
         buildFourthPage(event, parkCode)
 
-        // document.getElementById("thirdPage").classList.remove("active")
-        // document.getElementById("fourthPage").classList.add("active")
+
 
     })
 
@@ -179,9 +175,10 @@ function buildSecondPage(parks) {
     divWeather.setAttribute("id", "weatherInfo")
     let headWeather = document.createElement("h2")
     headWeather.innerHTML = "Weather Information:"
-    let contextWaether = document.createElement("div")
-    contextWaether.setAttribute("id", "contextDiv")
-    contextWaether.innerHTML = parks.weatherInfo
+    let contextWeather = document.createElement("div")
+    contextWeather.setAttribute("id", "contextDiv")
+    contextWeather.innerHTML = parks.weatherInfo
+    // contextWeather.src = parks.weatherInfo
 
     let backButton1 = document.createElement("div")
     backButton1.setAttribute("id", "backBTN")
@@ -190,7 +187,7 @@ function buildSecondPage(parks) {
     button1.innerHTML = "BACK"
     button1.className = "btn waves-effect waves-teal"
 
-    //by clicking first Page is shown and second Page is hidden
+    //------by clicking first Page is shown and second Page is hidden---//
     button1.addEventListener("click", function () {
 
         document.getElementById("firstPage").classList.add("active")
@@ -207,7 +204,7 @@ function buildSecondPage(parks) {
     divDescription.appendChild(contextDescription)
     secondPage.appendChild(divWeather)
     divWeather.appendChild(headWeather)
-    divWeather.appendChild(contextWaether)
+    divWeather.appendChild(contextWeather)
     secondPage.appendChild(backButton1)
     backButton1.appendChild(button1);
 
@@ -241,7 +238,10 @@ function buildThirdPage(parks) {
     mapsLink.innerHTML = parks.directionsUrl
 
 
-    backButton2 = document.getElementById("backBTN")
+
+    let backButton2 = document.createElement("div")
+    backButton2.setAttribute("id", "backBTN")
+
     let button2 = document.createElement("button")
     button2.setAttribute("id", "button2")
     button2.innerHTML = "BACK"
@@ -252,6 +252,7 @@ function buildThirdPage(parks) {
 
         document.getElementById("secondPage").classList.add("active")
         document.getElementById("thirdPage").classList.remove("active")
+        document.getElementById("fourthPage").classList.remove("active")
 
     });
 
@@ -313,12 +314,13 @@ function buildFourthPage(event, parkCode) {
 
                 document.getElementById("secondPage").classList.remove("active")
                 document.getElementById("thirdPage").classList.remove("active")
-                document.getElementById("fourthPage").classList.add("active")
+                // document.getElementById("fourthPage").classList.add("active")
 
 
             } else {
 
-                data.forEach(function (camp) {
+                result.data.forEach(function (camp) {
+                    console.log(result.data)
 
                     let divCamp = document.createElement("div")
                     divCamp.setAttribute("id", "campDiv")
@@ -327,9 +329,29 @@ function buildFourthPage(event, parkCode) {
                     let campDescription = document.createElement("tr")
                     campDescription.innerHTML = camp.description
 
+
+                    let backButton3 = document.createElement("div")
+                    backButton3.setAttribute("id", "backBTN")
+
+                    let button3 = document.createElement("button")
+                    button3.setAttribute("id", "button3")
+                    button3.innerHTML = "BACK"
+                    button3.className = "btn waves-effect waves-teal onclick"
+
+                    button3.addEventListener("click", function () {
+
+                        document.getElementById("secondPage").classList.add("active")
+                        document.getElementById("fourthPage").classList.remove("active")
+
+                    });
+
+
                     fourthPage.appendChild(divCamp)
                     divCamp.appendChild(campName)
                     divCamp.appendChild(campDescription)
+                    fourthPage.appendChild(backButton3)
+                    backButton3.appendChild(button3)
+
 
                     document.getElementById("secondPage").classList.remove("active")
                     document.getElementById("thirdPage").classList.remove("active")
