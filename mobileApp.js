@@ -1,9 +1,7 @@
-let parkImgs = [];
-let parkList = [];
-let parkInfos = [];
+////////------------------------starting with live data for showing the carousel-------------------//////////////////
 
-
-fetch(`https://developer.nps.gov/api/v1/parks?&api_key=${API_key}&fields=images&limit=20`)
+// fetch(`https://developer.nps.gov/api/v1/parks?&api_key=${API_key}&fields=images&limit=20`)
+fetch(`https://271105011696-nsp-apifake.s3.eu-central-1.amazonaws.com/response.json`)
     .then(response => {
         console.log(response)
         return response.json();
@@ -23,7 +21,9 @@ fetch(`https://developer.nps.gov/api/v1/parks?&api_key=${API_key}&fields=images&
                 p.setAttribute("class", "nameImg");
                 p.innerHTML = result.data[i].name;
                 let img = document.createElement("img");
+                // img.src = "https://demo.cloudimg.io/width/200/n/" + result.data[i].images[x].url;
                 img.src = result.data[i].images[x].url;
+
 
                 a.appendChild(img)
                 a.appendChild(p)
@@ -157,8 +157,6 @@ function buildSecondPage(parks) {
         let parkCode = event.target.getAttribute("data-parkCode");
         buildFourthPage(event, parkCode)
 
-
-
     })
 
 
@@ -208,8 +206,8 @@ function buildSecondPage(parks) {
     secondPage.appendChild(backButton1)
     backButton1.appendChild(button1);
 
-    document.getElementById("firstPage").classList.remove("active")
     document.getElementById("secondPage").classList.add("active")
+    document.getElementById("firstPage").classList.remove("active")
 }
 
 
@@ -265,8 +263,8 @@ function buildThirdPage(parks) {
     thirdPage.appendChild(backButton2)
     backButton2.appendChild(button2)
 
-    document.getElementById("secondPage").classList.remove("active")
     document.getElementById("thirdPage").classList.add("active")
+    document.getElementById("secondPage").classList.remove("active")
 
 }
 // let maps = document.getElementById("maps")
@@ -312,9 +310,10 @@ function buildFourthPage(event, parkCode) {
 
                 fourthPage.appendChild(divErrorCamp)
 
+                document.getElementById("fourthPage").classList.add("active")
                 document.getElementById("secondPage").classList.remove("active")
                 document.getElementById("thirdPage").classList.remove("active")
-                // document.getElementById("fourthPage").classList.add("active")
+
 
 
             } else {
@@ -338,6 +337,7 @@ function buildFourthPage(event, parkCode) {
                     button3.innerHTML = "BACK"
                     button3.className = "btn waves-effect waves-teal onclick"
 
+                    //by clicking second Page is shown and fourth Page is hidden
                     button3.addEventListener("click", function () {
 
                         document.getElementById("secondPage").classList.add("active")
