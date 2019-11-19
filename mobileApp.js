@@ -236,6 +236,7 @@ function buildThirdPage(parks) {
     let thirdPage = document.getElementById("thirdPage")
     thirdPage.innerHTML = "";
 
+
     let divHead = document.createElement("div")
     divHead.setAttribute("class", "contextInfo")
     let headMaps = document.createElement("h2")
@@ -398,12 +399,144 @@ function buildFourthPage(event, parkCode) {
         })
 }
 
+/////----------------------building LOGIN Page--------------------------//////
+function buildLoginPage() {
+
+    document.getElementById("loginPage").classList.add("active")
+    document.getElementById("firstPage").classList.remove("active")
+
+
+    let loginMain = document.getElementById("loginPage")
+    loginMain.innerHTML = "";
+
+    let loginDiv = document.createElement("div")
+    loginDiv.setAttribute("id", "loggedIn")
+    let chatDiv = document.createElement("div")
+    chatDiv.setAttribute("id", "chat")
+    let chatInput = document.createElement("input")
+    chatInput.setAttribute("id", "chatInput")
+
+    let chatBTN = document.createElement("id", "messageBTN")
+    chatBTN.innerHTML = "Send Message"
+    chatBTN.addEventListener("click", function () {
+        writeMessages();
+    })
+
+    let messageDiv = document.createElement("div")
+    messageDiv.setAttribute("id", "messages")
+
+    loginMain.appendChild(loginDiv)
+    loginDiv.appendChild(chatInput)
+    chatDiv.appendChild(chatBTN)
+    loginDiv.appendChild(messageDiv)
 
 
 
-////////--------------------------------------settting up firebase----------------------------------///////
+}
+
+
+////////--------------------------------------setting up firebase----------------------------------///////
 
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
-
 console.log(firebase);
+
+
+let username = "";
+let email = "";
+let provider = new firebase.auth.GoogleAuthProvider();
+// let provider = new firebase.auth().signInWithRedirect(provider);
+let db = firebase.firestore();
+
+function login() {
+    firebase
+        .auth()
+        .getRedirectResult()
+        .then(function (result) {
+            if (result.credential) {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                let token = result.credential.accessToken;
+                // ...
+            }
+            // The signed-in user info.
+            let user = result.user;
+            username = username.displayName;
+            email = user.email;
+            console.log("user", user);
+
+            readMessages();
+
+        }).catch(function (error) {
+            // Handle Errors here.
+            console.log("error", error);
+        })
+}
+
+function writeMessages() {
+
+    let message = document.getElementById("chatInput").value;
+    console.log("chatInput", chatInput)
+
+    let date = new Date();
+    db.collection("messages")
+        .add({
+            message: message,
+            name: username,
+            email: email,
+            date: date
+        })
+        .then(function (docRef) {
+            console.log("Document written with ID: ", docRef.id)
+            readMessages();
+        })
+        .catch(function (error) {
+            console.error("Error adding document: ", error);
+        });
+
+}
+
+function readMessages() {
+
+    messageDiv = document.getElementById("messages")
+    messageDiv.innerHTML = "";
+
+    db.collection("messages")
+        .orderBy("date")
+        .get()
+        .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                let messageBox = doc.createElement("div")
+                messageBox.setAttribute("class", "chatBox")
+                console.log("messageBox", messageBox)
+
+                let post = document.createElement("p")
+                let user = document.createElement("p")
+
+                console.log(doc.data());
+
+                const documents = doc.data();
+                const {
+                    email,
+                    name,
+                    message
+                } = documents;
+
+                user.innerHTML = name;
+                post.innerHTML = message;
+                console.log("user", user);
+
+                container.appendChild(user);
+                container.appendChild(post);
+                chat.appendChild(container);
+
+            })
+
+        })
+}
+console.log("db", db);
+
+
+// firebase.auth().signOut().then(function () {
+//     // Sign-out successful.
+// }).catch(function (error) {
+//     // An error happened.
+// });

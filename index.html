@@ -17,7 +17,7 @@
     <div id="header">
       <div class="navBar">
         <div class="navLeft">
-          <i class="small material-icons icon-white">person</i>
+          <button onclick="buildLoginPage()"><i class="small material-icons icon-white">person</i></button>
           <i class="small material-icons icon-white">chat</i>
           <i class="small material-icons icon-white"><a href="index.html">home</a></i>
         </div>
@@ -33,6 +33,19 @@
     </div>
   </header>
   <main>
+    <div id="loginPage" class="loginPage">
+      <div class="loginDiv">
+        <button type="button" id="loginBTN" onclick="login()">Log in!</button>
+      </div>
+    </div>
+
+    <!-- <div id="isLogin" class="mt-5">
+      <div id="chat">
+        <p>Simple chat example</p>
+        <input id="message" type="text" />
+        <button onclick="writePost()">Send post</button>
+      </div> -->
+
     <div class="page firstPage active" id="firstPage">
       <div id="carouselID" class="carousel">
       </div>
@@ -68,7 +81,6 @@
   </footer>
   <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
 
-  <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-analytics.js"></script>
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="./secrets.js"></script>
