@@ -22,8 +22,9 @@ fetch(`http://localhost:8080/response.json`)
                 p.setAttribute("class", "nameImg");
                 p.innerHTML = result.data[i].name;
                 let img = document.createElement("img");
-                img.src = "https://demo.cloudimg.io/width/200/n/" + result.data[i].images[x].url;
-                //img.src = "http://localhost:8081/resize?format=webp&w=200&url=" + result.data[i].images[x].url;
+                img.src = "http://localhost:8081/signature/auto/200/0/sm/0/plain/" + result.data[i].images[x].url;
+                // base64 encoded url
+                //img.src = "http://localhost:8081/signature/auto/200/0/sm/0/" + btoa(result.data[i].images[x].url);
                 a.appendChild(img)
                 a.appendChild(p)
                 carousel.appendChild(a)
