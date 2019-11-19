@@ -1,7 +1,7 @@
 ////////------------------------starting with live data for showing the carousel-------------------//////////////////
 
-//fetch(`https://developer.nps.gov/api/v1/parks?&api_key=${API_key}&fields=images&limit=20`)
-fetch(`http://localhost:8080/response.json`)
+//fetch(`https://developer.nps.gov/api/v1/parks?&api_key=${API_key}&fields=images`)
+fetch(`http://localhost:8080/parks.json`)
     .then(response => {
         console.log(response)
         return response.json();
