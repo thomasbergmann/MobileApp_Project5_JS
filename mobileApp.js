@@ -396,3 +396,13 @@ function buildFourthPage(event, parkCode) {
             }
         })
 }
+
+
+
+
+////////--------------------------------------settting up firebase----------------------------------///////
+
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+
+console.log(firebase);
