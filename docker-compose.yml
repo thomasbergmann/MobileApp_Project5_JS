@@ -7,6 +7,13 @@ services:
     ports:
       - 8080:80
   resizer:
-    image: shahedk/image-resizer
+    image: darthsim/imgproxy:latest
     ports:
-      - 8081:80
+      - 8081:8080
+    environment:
+      - IMGPROXY_ENABLE_WEBP_DETECTION=true
+      - IMGPROXY_DEVELOPMENT_ERRORS_MODE=true
+      - IMGPROXY_MAX_SRC_RESOLUTION=65
+      - IMGPROXY_READ_TIMEOUT=120
+      - IMGPROXY_DOWNLOAD_TIMEOUT=60
+      - IMGPROXY_WRITE_TIMEOUT=30
