@@ -260,7 +260,7 @@ function buildThirdPage(parks) {
 
     let button2 = document.createElement("button")
     button2.setAttribute("id", "button")
-    button2.innerHTML = "BACK"
+    button2.innerHTML = "Previous Page"
     button2.className = "btn waves-effect waves-teal onclick"
 
     //by clicking second Page is shown and third Page is hidden---//
@@ -373,7 +373,7 @@ function buildFourthPage(event, parkCode) {
 
                     let button3 = document.createElement("button")
                     button3.setAttribute("id", "button")
-                    button3.innerHTML = "BACK"
+                    button3.innerHTML = "Previous Page"
                     button3.className = "btn waves-effect waves-teal onclick"
 
                     //by clicking second Page is shown and fourth Page is hidden
@@ -398,85 +398,140 @@ function buildFourthPage(event, parkCode) {
             }
         })
 }
-
 /////----------------------building LOGIN Page--------------------------//////
-function buildLoginPage() {
 
-    document.getElementById("loginPage").classList.add("active")
-    document.getElementById("firstPage").classList.remove("active")
+function buildChatPage(documents) {
+    const {
+        email,
+        name,
+        message
+    } = documents;
+    console.log(documents)
 
 
-    let loginMain = document.getElementById("loginPage")
-    loginMain.innerHTML = "";
+    let chatPage = document.getElementById("chatPage")
+    console.log()
+    chatPage.innerHTML = "";
 
-    let loginDiv = document.createElement("div")
-    loginDiv.setAttribute("id", "loggedIn")
+    let chatMain = document.createElement("div")
+    chatMain.setAttribute("id", "loggedIn")
+
+    let chatHeadline = document.createElement("p")
+    chatHeadline.innerHTML = "Let`s chat !!!"
+
     let chatDiv = document.createElement("div")
     chatDiv.setAttribute("id", "chat")
-    let chatInput = document.createElement("input")
-    chatInput.setAttribute("id", "chatInput")
-
-    let chatBTN = document.createElement("id", "messageBTN")
-    chatBTN.innerHTML = "Send Message"
-    chatBTN.addEventListener("click", function () {
-        writeMessages();
-    })
 
     let messageDiv = document.createElement("div")
     messageDiv.setAttribute("id", "messages")
+    let post = document.createElement("p")
+    post.innerHTML = message;
+    let user = document.createElement("p")
+    user.innerHTML = name;
 
-    loginMain.appendChild(loginDiv)
-    loginDiv.appendChild(chatInput)
+
+    let chatInput = document.createElement("input")
+    chatInput.setAttribute("id", "chatInput")
+
+    let chatBTN = document.createElement("button")
+    chatBTN.setAttribute("id", "messageBTN")
+    chatBTN.innerHTML = "Send Message"
+    chatBTN.addEventListener("click", function () {
+        writeMessages();
+
+    })
+
+    let logoutDiv = document.createElement("div")
+    logoutDiv.setAttribute("class", "logoutDiv")
+
+    let logoutBTN = document.createElement("button")
+    logoutBTN.setAttribute("id", "logoutBTN")
+    logoutBTN.innerHTML = "Log Out"
+    logoutBTN.className = "btn waves-effect waves-teal"
+    logoutBTN.addEventListener("click", function () {
+        logout();
+
+    })
+
+    chatPage.appendChild(chatMain)
+    chatMain.appendChild(chatHeadline)
+    chatMain.appendChild(chatDiv)
+    chatDiv.appendChild(messageDiv)
+    messageDiv.appendChild(user);
+    messageDiv.appendChild(post);
+    chatDiv.appendChild(chatInput)
     chatDiv.appendChild(chatBTN)
-    loginDiv.appendChild(messageDiv)
+    chatMain.appendChild(logoutDiv)
+    logoutDiv.appendChild(logoutBTN)
+
 
 
 
 }
 
 
-////////--------------------------------------setting up firebase----------------------------------///////
+////////--------------------------------------setting up firebase----LOGIN and CHAT Functions------------------------------///////
 
 firebase.initializeApp(firebaseConfig);
-console.log(firebase);
 
 
 let username = "";
 let email = "";
 let provider = new firebase.auth.GoogleAuthProvider();
-// let provider = new firebase.auth().signInWithRedirect(provider);
 let db = firebase.firestore();
 
 function login() {
-    firebase
-        .auth()
-        .getRedirectResult()
-        .then(function (result) {
-            if (result.credential) {
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                let token = result.credential.accessToken;
-                // ...
-            }
-            // The signed-in user info.
-            let user = result.user;
+    // firstPage.innerHTML = "";
+
+    firebase.auth().signInWithRedirect(provider)
+
+}
+
+let loggedIn = false;
+firebase.auth().getRedirectResult().then(function (result) {
+
+        if (result.credential) {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            var token = result.credential.accessToken;
+            // ...
+        }
+        // The signed-in user info.
+        let user = result.user;
+
+        if (user !== null) {
             username = username.displayName;
             email = user.email;
             console.log("user", user);
+            loggedIn = true;
+
+            document.getElementById("chatPage").classList.add("active")
+            document.getElementById("firstPage").classList.remove("active")
 
             readMessages();
 
-        }).catch(function (error) {
-            // Handle Errors here.
-            console.log("error", error);
-        })
-}
+
+        } else {
+
+
+        }
+    })
+    .catch(function (error) {
+        // Handle Errors here.
+        console.log("error", error);
+    })
+
+
+
 
 function writeMessages() {
 
     let message = document.getElementById("chatInput").value;
-    console.log("chatInput", chatInput)
+    // console.log("chatInput", chatInput)
+    // document.getElementById("messages").value;
+    // console.log("messages", messages)
 
     let date = new Date();
+
     db.collection("messages")
         .add({
             message: message,
@@ -495,38 +550,18 @@ function writeMessages() {
 }
 
 function readMessages() {
+    console.log("here")
 
-    messageDiv = document.getElementById("messages")
+    document.getElementById("messages")
     messageDiv.innerHTML = "";
 
-    db.collection("messages")
-        .orderBy("date")
-        .get()
+    db.collection("messages").get()
         .then(querySnapshot => {
             querySnapshot.forEach(doc => {
-                let messageBox = doc.createElement("div")
-                messageBox.setAttribute("class", "chatBox")
-                console.log("messageBox", messageBox)
-
-                let post = document.createElement("p")
-                let user = document.createElement("p")
-
                 console.log(doc.data());
 
                 const documents = doc.data();
-                const {
-                    email,
-                    name,
-                    message
-                } = documents;
-
-                user.innerHTML = name;
-                post.innerHTML = message;
-                console.log("user", user);
-
-                container.appendChild(user);
-                container.appendChild(post);
-                chat.appendChild(container);
+                buildChatPage(documents);
 
             })
 
@@ -534,9 +569,23 @@ function readMessages() {
 }
 console.log("db", db);
 
+function logout() {
+    chatPage.innerHTML = "";
 
-// firebase.auth().signOut().then(function () {
-//     // Sign-out successful.
-// }).catch(function (error) {
-//     // An error happened.
-// });
+    firebase
+        .auth()
+        .signOut()
+        .then(function () {
+            loggedIn = false;
+
+            document.getElementById("firstPage").classList.add("active")
+            document.getElementById("chatPage").classList.remove("active")
+
+            //     // Sign-out successful.
+            console.log("sign out was succesful")
+
+        }).catch(function (error) {
+            // An error happened.
+            console.log("Error with logout")
+        })
+}

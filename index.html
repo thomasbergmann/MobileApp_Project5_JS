@@ -17,8 +17,10 @@
     <div id="header">
       <div class="navBar">
         <div class="navLeft">
-          <button onclick="buildLoginPage()"><i class="small material-icons icon-white">person</i></button>
-          <i class="small material-icons icon-white">chat</i>
+          <!-- <button type="button" id="loginBTN" onclick="login()"></button>
+            <i class="small material-icons icon-white">person</i></button> -->
+          <button type="button" id="chatBTN" onclick="login()"><i
+              class="small material-icons icon-white">chat</i></button>
           <i class="small material-icons icon-white"><a href="index.html">home</a></i>
         </div>
         <div class="navRight">
@@ -33,10 +35,10 @@
     </div>
   </header>
   <main>
-    <div id="loginPage" class="loginPage">
-      <div class="loginDiv">
+    <div id="chatPage" class="chatPage">
+      <!-- <div class="loginDiv">
         <button type="button" id="loginBTN" onclick="login()">Log in!</button>
-      </div>
+      </div> -->
     </div>
 
     <!-- <div id="isLogin" class="mt-5">
@@ -80,6 +82,8 @@
 
   </footer>
   <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script>
 
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
