@@ -82,11 +82,16 @@ function buildParkListDiv(data) {
     if (data.length == 0) {
         let parkListError = document.getElementById("errorDiv")
         parkListError.innerHTML = ""
-        let listError = document.createElement("tr")
+        let listError = document.createElement("p")
         listError.setAttribute("class", "errorText")
-        listError.innerHTML = "check typing--something is incorrect or park is not listed-->>use link above of official NSP Homepage<<--"
+        listError.innerHTML = "Check Typing -OR- Park is not listed-->>use link above of official NSP Homepage<<--"
+        let listError1 = document.createElement("p")
+        listError1.setAttribute("class", "errorText")
+        listError1.innerHTML = "Check Typing -OR- Park is not listed-->>use link above of official NSP Homepage<<--"
+
 
         parkListError.appendChild(listError)
+        parkListError.appendChild(listError1)
 
         document.getElementById("errorDiv").style.visibility = "visible";
         document.getElementById("carouselID").style.display = "none";
@@ -308,6 +313,9 @@ function buildThirdPage(parks) {
 /// extract data attrib out of the event
 
 
+
+////////--------------------------------------building fourth Page-----------------------------------------///////
+
 function buildFourthPage(event, parkCode) {
     console.log(event)
     console.log(parkCode)
@@ -400,7 +408,7 @@ function buildFourthPage(event, parkCode) {
             }
         })
 }
-/////----------------------building LOGIN Page--------------------------//////
+/////----------------------building LOGIN/CHAT Page--------------------------//////
 
 function buildChatPage(documents, chatPage) {
     console.log(documents)
@@ -546,7 +554,7 @@ function renderUser(user) {
     userEl.appendChild(imgEl)
 }
 
-
+/*write some function or condition for user*/
 function writeMessages(user) {
 
     let input = document.getElementById("chatInput").value;
@@ -590,7 +598,7 @@ function readMessages() {
                 console.log(doc.data());
 
                 const documents = doc.data();
-                // buildChatPage(documents, chatPage);
+                buildChatPage(documents, chatPage);
 
             })
 
@@ -599,7 +607,7 @@ function readMessages() {
 console.log("db", db);
 
 function logout() {
-    // chatPage.innerHTML = "";
+
     document.getElementById("firstPage").style.visibility = "visible";
     document.getElementById("chatPage").style.visibility = "hidden";
 
