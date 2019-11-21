@@ -15,13 +15,12 @@ body {
 /*generell setting for header*/
 #header {
     position: sticky;
+    margin-top: 3vh;
 }
 
 .navBar {
-    position: absolute;
     display: flex;
-    position: sticky;
-    /* margin-top: 1vh; */
+    margin-top: 1vh;
 }
 
 .navRight {
@@ -34,11 +33,12 @@ body {
     left: 5vw;
 }
 
-.messageBTN {
+.chatBTN button {
     background-color: transparent;
 }
 
 #headline {
+
     display: flex;
     justify-content: center;
     margin-top: 5vh;
@@ -48,25 +48,31 @@ body {
 h1 {
     font-size: 5vw;
     text-shadow: 4px 4px 6px rgb(136, 134, 134);
+    margin-top: 10vh;
+
 }
 
 h2 {
     font-size: 3vw;
     text-shadow: 3px 3px 5px rgb(136, 134, 134);
+    margin-top: 8vh;
 }
 
 h4 {
     font-size: 1vw;
     text-shadow: 3px 3px 5px rgb(136, 134, 134);
+    margin-top: 9vh;
+
 }
 
 
-/* .carousel {
-    display: none;
-} */
+/*-------------to switch pages ---------*/
 
-/*-------------first page style---------*/
-.loginPage {
+.user {
+    display: none;
+}
+
+.chatPage {
     display: none;
 }
 
@@ -80,7 +86,6 @@ h4 {
 
 .thirdPage {
     display: none;
-    padding-top: 50px;
 }
 
 .fourthPage {
@@ -93,28 +98,25 @@ h4 {
     align-items: center;
 }
 
-.carousel-item {
-    align-items: center;
-    text-align: center;
-
-}
+/*----------------first Page style------------*/
 
 .carousel div {
-    max-width: auto;
-    max-height: 200px;
+    /* max-width: auto;
+    max-height: 200px; */
+    /* vertical-align: 30%; */
+    align-items: center;
 }
 
-
-
 #searchContainer {
-    margin: 50px 5px 30px 5px;
     position: relative;
     /* top: 75%; */
     display: flex;
     justify-content: center;
     text-align: center;
-    visibility: visible;
     vertical-align: 50%;
+    margin: 50px 5px 30px 5px;
+
+    visibility: visible;
 
 }
 
@@ -192,14 +194,17 @@ h4 {
     display: flex;
     justify-content: center;
     padding: 10px;
-    margin: 20px;
+}
+
+.navBTN button {
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .contextInfo {
     max-width: auto;
     max-height: 300px;
-    margin: 30px;
-
+    margin: 0px 30px;
     position: relative;
     text-align: center;
     /* vertical-align: middle; */
@@ -228,7 +233,7 @@ h4 {
 #backBTN {
     font-optical-sizing: auto;
     font-size: 1vw;
-    padding: 30px;
+    padding: 20px;
 
 }
 
@@ -257,8 +262,12 @@ h4 {
 }
 
 #user p {
-    /* padding-left: 5rem; */
-    padding-right: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#user div {
+    margin: 0px 20px 0px 20px;
 
 }
 
