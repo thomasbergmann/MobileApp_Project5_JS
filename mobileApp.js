@@ -1,6 +1,8 @@
 ////////------------------------starting with live data for showing the carousel-------------------//////////////////
 
 //fetch(`https://developer.nps.gov/api/v1/parks?&api_key=${API_key}&fields=images`)
+
+
 fetch(`http://localhost:8080/parks.json`)
     .then(response => {
         console.log(response)
@@ -400,18 +402,19 @@ function buildFourthPage(event, parkCode) {
 }
 /////----------------------building LOGIN Page--------------------------//////
 
-function buildChatPage(documents) {
+function buildChatPage(documents, chatPage) {
+    console.log(documents)
     const {
         email,
         name,
-        message
+        message,
+        photo,
+        date
     } = documents;
     console.log(documents)
 
 
-    let chatPage = document.getElementById("chatPage")
-    console.log()
-    chatPage.innerHTML = "";
+
 
     let chatMain = document.createElement("div")
     chatMain.setAttribute("id", "loggedIn")
@@ -424,10 +427,15 @@ function buildChatPage(documents) {
 
     let messageDiv = document.createElement("div")
     messageDiv.setAttribute("id", "messages")
+
+    let photoEl = document.createElement("img")
+    photoEl.setAttribute("src", photo)
     let post = document.createElement("p")
     post.innerHTML = message;
     let user = document.createElement("p")
     user.innerHTML = name;
+    let dateEl = document.createElement("p")
+    dateEl.innerHTML = date;
 
 
     let chatInput = document.createElement("input")
@@ -457,6 +465,8 @@ function buildChatPage(documents) {
     chatMain.appendChild(chatHeadline)
     chatMain.appendChild(chatDiv)
     chatDiv.appendChild(messageDiv)
+    messageDiv.appendChild(photoEl);
+    messageDiv.appendChild(dateEl);
     messageDiv.appendChild(user);
     messageDiv.appendChild(post);
     chatDiv.appendChild(chatInput)
@@ -474,14 +484,14 @@ function buildChatPage(documents) {
 
 firebase.initializeApp(firebaseConfig);
 
-
+let photo = "";
 let username = "";
-let email = "";
 let provider = new firebase.auth.GoogleAuthProvider();
 let db = firebase.firestore();
 
 function login() {
-    // firstPage.innerHTML = "";
+    /*check later---this does not work!!!*/
+    document.getElementById("firstPage").style.visibility = "hidden";
 
     firebase.auth().signInWithRedirect(provider)
 
@@ -495,18 +505,22 @@ firebase.auth().getRedirectResult().then(function (result) {
             var token = result.credential.accessToken;
             // ...
         }
+
         // The signed-in user info.
         let user = result.user;
 
         if (user !== null) {
-            username = username.displayName;
+            photo = user.photoURL;
+            username = user.displayName;
             email = user.email;
+
             console.log("user", user);
             loggedIn = true;
 
             document.getElementById("chatPage").classList.add("active")
             document.getElementById("firstPage").classList.remove("active")
 
+            renderUser(user)
             readMessages();
 
 
@@ -520,28 +534,40 @@ firebase.auth().getRedirectResult().then(function (result) {
         console.log("error", error);
     })
 
+function renderUser(user) {
+    let userEl = document.getElementById("user")
+
+    let userName = document.createElement("p")
+    userName.innerHTML = user.displayName
+    let imgEl = document.createElement("img")
+    imgEl.setAttribute("src", user.photoURL)
+    imgEl.setAttribute("class", "avatar")
+    userEl.appendChild(userName)
+    userEl.appendChild(imgEl)
+}
 
 
+function writeMessages(user) {
 
-function writeMessages() {
-
-    let message = document.getElementById("chatInput").value;
+    let input = document.getElementById("chatInput").value;
     // console.log("chatInput", chatInput)
     // document.getElementById("messages").value;
-    // console.log("messages", messages)
+    console.log("input", input)
 
     let date = new Date();
 
     db.collection("messages")
+        .orderBy("date")
+        .get()
         .add({
-            message: message,
+            message: input,
             name: username,
             email: email,
             date: date
         })
         .then(function (docRef) {
             console.log("Document written with ID: ", docRef.id)
-            readMessages();
+            // readMessages();
         })
         .catch(function (error) {
             console.error("Error adding document: ", error);
@@ -557,11 +583,14 @@ function readMessages() {
 
     db.collection("messages").get()
         .then(querySnapshot => {
+            // let chatPage = document.getElementById("chatPage")
+            // chatPage.innerHTML = "";
+
             querySnapshot.forEach(doc => {
                 console.log(doc.data());
 
                 const documents = doc.data();
-                buildChatPage(documents);
+                // buildChatPage(documents, chatPage);
 
             })
 
@@ -570,7 +599,10 @@ function readMessages() {
 console.log("db", db);
 
 function logout() {
-    chatPage.innerHTML = "";
+    // chatPage.innerHTML = "";
+    document.getElementById("firstPage").style.visibility = "visible";
+    document.getElementById("chatPage").style.visibility = "hidden";
+
 
     firebase
         .auth()

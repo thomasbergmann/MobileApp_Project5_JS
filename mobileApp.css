@@ -76,6 +76,7 @@ h4 {
 
 .thirdPage {
     display: none;
+    padding-top: 50px;
 }
 
 .fourthPage {
@@ -207,4 +208,21 @@ h4 {
 #logoutBTN {
     max-width: 12px;
     max-height: 10px;
+}
+
+#user {
+    display: flex;
+    justify-content: space-around;
+}
+
+/* #user img {
+    width: 100px;
+    height: 180px;
+} */
+
+.avatar {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 10%;
 }
