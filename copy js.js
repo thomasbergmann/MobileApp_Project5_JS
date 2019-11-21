@@ -82,11 +82,16 @@ function buildParkListDiv(data) {
     if (data.length == 0) {
         let parkListError = document.getElementById("errorDiv")
         parkListError.innerHTML = ""
-        let listError = document.createElement("tr")
+        let listError = document.createElement("p")
         listError.setAttribute("class", "errorText")
-        listError.innerHTML = "check typing--something is incorrect or park is not listed-->>use link above of official NSP Homepage<<--"
+        listError.innerHTML = "Check Typing -OR- Park is not listed"
+        let listError1 = document.createElement("p")
+        listError1.setAttribute("class", "errorText")
+        listError1.innerHTML = "-->>use link above of official NSP Homepage<<--"
+
 
         parkListError.appendChild(listError)
+        parkListError.appendChild(listError1)
 
         document.getElementById("errorDiv").style.visibility = "visible";
         document.getElementById("carouselID").style.display = "none";
@@ -157,6 +162,7 @@ function buildSecondPage(parks) {
     divNavButtons.setAttribute("class", "navBTN")
     let buttonDirections = document.createElement("button")
     buttonDirections.setAttribute("id", parks.id)
+    buttonDirections.setAttribute("class", "secondPageBTNs")
     console.log(buttonDirections)
     buttonDirections.innerHTML = "How to get there"
     buttonDirections.addEventListener("click", function (event) {
@@ -168,6 +174,7 @@ function buildSecondPage(parks) {
 
     let buttonCampgrounds = document.createElement("button")
     buttonCampgrounds.setAttribute("data-parkCode", parks.parkCode)
+    buttonCampgrounds.setAttribute("class", "secondPageBTNs")
     buttonCampgrounds.innerHTML = "Find a Campground"
     //------through event on click the parkcode is transmitted---and fourth page is build--//
     buttonCampgrounds.addEventListener("click", function (event) {
@@ -308,6 +315,9 @@ function buildThirdPage(parks) {
 /// extract data attrib out of the event
 
 
+
+////////--------------------------------------build fourth Page-----------------------------------------///////
+
 function buildFourthPage(event, parkCode) {
     console.log(event)
     console.log(parkCode)
@@ -400,7 +410,7 @@ function buildFourthPage(event, parkCode) {
             }
         })
 }
-/////----------------------building LOGIN Page--------------------------//////
+/////-----------------------------------------------building LOGIN/CHAT Page--------------------------------------------------//////
 
 function buildChatPage(documents, chatPage) {
     console.log(documents)
@@ -413,12 +423,10 @@ function buildChatPage(documents, chatPage) {
     console.log(documents)
 
 
-
-
     let chatMain = document.createElement("div")
     chatMain.setAttribute("id", "loggedIn")
 
-    let chatHeadline = document.createElement("p")
+    let chatHeadline = document.createElement("h2")
     chatHeadline.innerHTML = "Let`s chat !!!"
 
     let chatDiv = document.createElement("div")
@@ -427,21 +435,23 @@ function buildChatPage(documents, chatPage) {
     let messageDiv = document.createElement("div")
     messageDiv.setAttribute("id", "messages")
 
-    let photoEl = document.createElement("img")
-    photoEl.setAttribute("src", photo)
-    let post = document.createElement("p")
+    let photo = document.createElement("img")
+    photo.setAttribute("src", user.photo)
+    let post = document.createElement("tr")
     post.innerHTML = message;
-    let user = document.createElement("p")
+    let user = document.createElement("tr")
     user.innerHTML = name;
-    let dateEl = document.createElement("p")
-    dateEl.innerHTML = date;
+    let date = document.createElement("tr")
+    date.innerHTML = date;
 
 
     let chatInput = document.createElement("input")
     chatInput.setAttribute("id", "chatInput")
+    chatInput.setAttribute("placeholder", "Type Here")
+    chatInput.className = "placeholder"
 
     let chatBTN = document.createElement("button")
-    chatBTN.setAttribute("id", "messageBTN")
+    chatBTN.setAttribute("class", "messageBTN")
     chatBTN.innerHTML = "Send Message"
     chatBTN.addEventListener("click", function () {
         writeMessages();
@@ -483,7 +493,7 @@ function buildChatPage(documents, chatPage) {
 
 firebase.initializeApp(firebaseConfig);
 
-let photo = "";
+let userphoto = "";
 let username = "";
 let provider = new firebase.auth.GoogleAuthProvider();
 let db = firebase.firestore();
@@ -491,6 +501,7 @@ let db = firebase.firestore();
 function login() {
     /*check later---this does not work!!!*/
     document.getElementById("firstPage").style.visibility = "hidden";
+
 
     firebase.auth().signInWithRedirect(provider)
 
@@ -509,10 +520,8 @@ firebase.auth().getRedirectResult().then(function (result) {
         let user = result.user;
 
         if (user !== null) {
-            photo = user.photoURL;
+            userphoto = user.photoURL;
             username = user.displayName;
-            email = user.email;
-
             console.log("user", user);
             loggedIn = true;
 
@@ -534,18 +543,19 @@ firebase.auth().getRedirectResult().then(function (result) {
     })
 
 function renderUser(user) {
+
     let userEl = document.getElementById("user")
 
-    let userName = document.createElement("p")
-    userName.innerHTML = user.displayName
+    let userNameEl = document.createElement("p")
+    userNameEl.innerHTML = user.displayName
     let imgEl = document.createElement("img")
     imgEl.setAttribute("src", user.photoURL)
     imgEl.setAttribute("class", "avatar")
-    userEl.appendChild(userName)
+    userEl.appendChild(userNameEl)
     userEl.appendChild(imgEl)
 }
 
-
+/*write some function or condition for user*/
 function writeMessages(user) {
 
     let input = document.getElementById("chatInput").value;
@@ -559,6 +569,7 @@ function writeMessages(user) {
         .add({
             message: input,
             name: username,
+            photo: userphoto,
             date: date
         })
         .then(function (docRef) {
@@ -578,11 +589,8 @@ function readMessages() {
     // messageDiv.innerHTML = "";
 
     db.collection("messages")
-        .orderBy("date")
         .get()
         .then(querySnapshot => {
-            // let chatPage = document.getElementById("chatPage")
-            // chatPage.innerHTML = "";
 
             querySnapshot.forEach(doc => {
                 console.log(doc.data());
@@ -597,7 +605,7 @@ function readMessages() {
 console.log("db", db);
 
 function logout() {
-    // chatPage.innerHTML = "";
+
     document.getElementById("firstPage").style.visibility = "visible";
     document.getElementById("chatPage").style.visibility = "hidden";
 

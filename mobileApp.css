@@ -34,6 +34,10 @@ body {
     left: 5vw;
 }
 
+.messageBTN {
+    background-color: transparent;
+}
+
 #headline {
     display: flex;
     justify-content: center;
@@ -90,8 +94,16 @@ h4 {
 }
 
 .carousel-item {
+    align-items: center;
     text-align: center;
+
 }
+
+.carousel div {
+    max-width: auto;
+    max-height: 200px;
+}
+
 
 
 #searchContainer {
@@ -102,6 +114,8 @@ h4 {
     justify-content: center;
     text-align: center;
     visibility: visible;
+    vertical-align: 50%;
+
 }
 
 #searchContainer input {
@@ -115,6 +129,7 @@ h4 {
     width: 75px;
     height: 30px;
     font-optical-sizing: auto;
+
 }
 
 #searchButton {
@@ -126,24 +141,35 @@ h4 {
     box-shadow: 2px 2px 5px white;
     border: none;
     border-radius: 5px;
-
 }
 
 #errorDiv {
+    max-width: auto;
+    max-height: 300px;
+    margin: 30px;
+
     position: relative;
     display: flex;
     justify-content: center;
+    flex-flow: row wrap;
+
     visibility: hidden;
 }
 
 .errorText {
-    flex-flow: row wrap;
+    max-width: auto;
+    max-height: 300px;
+
     text-align: center;
     align-self: center;
 
 }
 
 #dropdownList {
+    max-width: auto;
+    max-height: 300px;
+    margin: 30px;
+
     position: relative;
     display: flex;
     flex-direction: column;
@@ -153,6 +179,9 @@ h4 {
 }
 
 .divTR {
+    max-width: auto;
+    max-height: 300px;
+
     flex-flow: row wrap;
     text-align: center;
     align-self: center;
@@ -167,18 +196,26 @@ h4 {
 }
 
 .contextInfo {
-    width: 25rem;
+    max-width: auto;
+    max-height: 300px;
+    margin: 30px;
+
     position: relative;
     text-align: center;
     /* vertical-align: middle; */
 
 }
 
+.secondPageBTNs {
+    padding: 0px 20px 0px 20px;
+}
+
 /*-------------setting up fourth Page------*/
 
 #campDiv {
-    max-width: 200px;
+    max-width: auto;
     max-height: 300px;
+    margin: 30px;
 }
 
 #campDiv h1 {
@@ -211,6 +248,10 @@ h4 {
 }
 
 #user {
+    max-width: auto;
+    max-height: 300px;
+    margin: 30px;
+
     display: flex;
     justify-content: center;
 }
@@ -228,4 +269,17 @@ h4 {
     height: 50px;
     border-radius: 10%;
 
+}
+
+.placeholder {
+    text-align: center;
+}
+
+.chatPage h2 {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.chatPage tr {
+    text-align: left;
 }
