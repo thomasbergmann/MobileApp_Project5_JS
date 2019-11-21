@@ -18,3 +18,4 @@ services:
       - IMGPROXY_DOWNLOAD_TIMEOUT=60
       - IMGPROXY_WRITE_TIMEOUT=30
 
+ 
