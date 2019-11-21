@@ -38,7 +38,7 @@ body {
     display: flex;
     justify-content: center;
     margin-top: 5vh;
-    position: sticky;
+    margin-bottom: 5vh;
 }
 
 h1 {
@@ -95,9 +95,9 @@ h4 {
 
 
 #searchContainer {
-    padding: 20px;
+    margin: 50px 5px 30px 5px;
     position: relative;
-    top: 75%;
+    /* top: 75%; */
     display: flex;
     justify-content: center;
     text-align: center;
@@ -118,7 +118,7 @@ h4 {
 }
 
 #searchButton {
-    vertical-align: 25%;
+    vertical-align: 50%;
     color: white;
 }
 
@@ -126,7 +126,7 @@ h4 {
     box-shadow: 2px 2px 5px white;
     border: none;
     border-radius: 5px;
-    padding: 5px;
+
 }
 
 #errorDiv {
@@ -212,17 +212,20 @@ h4 {
 
 #user {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
 }
 
-/* #user img {
-    width: 100px;
-    height: 180px;
-} */
+#user p {
+    /* padding-left: 5rem; */
+    padding-right: 20px;
+
+}
+
 
 .avatar {
     vertical-align: middle;
     width: 50px;
     height: 50px;
     border-radius: 10%;
+
 }
