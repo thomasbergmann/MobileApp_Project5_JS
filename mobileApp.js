@@ -552,8 +552,8 @@ function writeMessages() {
 function readMessages() {
     console.log("here")
 
-    document.getElementById("messages")
-    messageDiv.innerHTML = "";
+    // document.getElementById("messages")
+    // messageDiv.innerHTML = "";
 
     db.collection("messages").get()
         .then(querySnapshot => {

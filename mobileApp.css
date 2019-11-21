@@ -169,7 +169,7 @@ h4 {
     width: 25rem;
     position: relative;
     text-align: center;
-    vertical-align: middle;
+    /* vertical-align: middle; */
 
 }
 
@@ -177,7 +177,7 @@ h4 {
 
 #campDiv {
     max-width: 200px;
-    max-heigth: 300px;
+    max-height: 300px;
 }
 
 #campDiv h1 {
