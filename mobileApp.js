@@ -197,7 +197,9 @@ function buildSecondPage(parks) {
     let contextWeather = document.createElement("div")
     contextWeather.setAttribute("id", "contextDiv")
     contextWeather.innerHTML = parks.weatherInfo
-    // contextWeather.src = parks.weatherInfo
+    /*try to get the link working which is inside*/
+    // contextWeather.setAttribute("href", parks.weatherInfo)
+
 
     //------creates BACK button-------//
     let backButton1 = document.createElement("div")
@@ -257,7 +259,8 @@ function buildThirdPage(parks) {
     let divMaps = document.createElement("div")
     divMaps.setAttribute("id", "maps")
     let mapsLink = document.createElement("a")
-    mapsLink.getAttribute("src", parks.directionsUrl)
+    mapsLink.setAttribute("href", parks.directionsUrl)
+    mapsLink.innerHTML = "Directions Link"
 
 
     //------creates BACK button-------//
@@ -501,7 +504,7 @@ function renderUser(user) {
 
 function renderChatPage() {
 
-    document.getElementById("chatPage")
+    let chatPage = document.getElementById("chatPage")
 
 
     let chatMain = document.createElement("div")
@@ -545,8 +548,12 @@ function renderChatPage() {
     chatMain.appendChild(chatBTN)
     chatMain.appendChild(logoutDiv)
     logoutDiv.appendChild(logoutBTN)
-    chatMain.appendChild(backButton4)
     backButton4.appendChild(button4)
+    chatMain.appendChild(backButton4)
+
+    chatPage.appendChild(chatMain);
+    chatPage.appendChild(logoutDiv);
+
 
 
 }

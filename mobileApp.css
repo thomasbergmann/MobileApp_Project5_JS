@@ -38,30 +38,30 @@ body {
 }
 
 #headline {
-
+    position: relative;
     display: flex;
     justify-content: center;
-    margin-top: 5vh;
+    /* margin-top: 5vh; */
     margin-bottom: 5vh;
 }
 
 h1 {
     font-size: 5vw;
     text-shadow: 4px 4px 6px rgb(136, 134, 134);
-    margin-top: 10vh;
+    margin-top: 9vh;
 
 }
 
 h2 {
     font-size: 3vw;
     text-shadow: 3px 3px 5px rgb(136, 134, 134);
-    margin-top: 8vh;
+    margin-top: 6vh;
 }
 
 h4 {
     font-size: 1vw;
     text-shadow: 3px 3px 5px rgb(136, 134, 134);
-    margin-top: 9vh;
+    margin-top: 7vh;
 
 }
 
