@@ -437,6 +437,7 @@ function buildChat(documents) {
 
 firebase.initializeApp(firebaseConfig);
 
+
 let username = "";
 let provider = new firebase.auth.GoogleAuthProvider();
 let db = firebase.firestore();
@@ -483,6 +484,9 @@ firebase.auth().getRedirectResult().then(function (result) {
         console.log("error", error);
     })
 
+
+///-----------creates the headline where it shows which user is logged in--------------///
+
 function renderUser(user) {
     let userEl = document.getElementById("user")
 
@@ -494,13 +498,13 @@ function renderUser(user) {
     let chatHeadline = document.createElement("p")
     chatHeadline.innerHTML = "Let`s chat !!!"
 
-
     userEl.appendChild(userName)
     userEl.appendChild(imgEl)
     userEl.appendChild(chatHeadline)
 }
 
 
+////-----supposed to display the  message type in field ,log out and back button--------///
 
 function renderChatPage() {
 
@@ -529,7 +533,7 @@ function renderChatPage() {
         logout();
 
     })
-    //------creates BACK button-------//
+    //------creates BACK button-to first page-------//
     let backButton4 = document.createElement("div")
     backButton4.setAttribute("id", "backBTN")
 
@@ -604,8 +608,13 @@ function readMessages() {
             })
 
         })
+        .settings({
+            timestampsInSnapshots: true
+        })
+
 }
 console.log("db", db);
+
 
 function logout() {
 

@@ -38,10 +38,10 @@ body {
 }
 
 #headline {
-    position: relative;
+    /* position: relative; */
     display: flex;
     justify-content: center;
-    /* margin-top: 5vh; */
+    margin-top: 5vh;
     margin-bottom: 5vh;
 }
 
